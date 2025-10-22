@@ -2,7 +2,7 @@
 
 
 /// <summary>
-/// Пол пациента.
+/// The gender of the patient
 /// </summary>
 public enum Gender
 {

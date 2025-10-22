@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Components;
+﻿using Polyclinic.Components.Enum;
+
+namespace Polyclinic.Components;
 
 /// <summary>
 /// The class representing the polyclinic doctor

@@ -1,7 +1,7 @@
 ﻿namespace Polyclinic.Components.Enum;
 
 /// <summary>
-/// Группа крови пациента.
+/// The patient's blood type
 /// </summary>
 public enum BloodGroup
 {

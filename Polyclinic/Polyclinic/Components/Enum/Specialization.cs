@@ -1,7 +1,7 @@
 ﻿namespace Polyclinic.Components.Enum;
 
 /// <summary>
-/// Медицинская специализация врача.
+/// Medical specialization of a doctor
 /// </summary>
 public enum Specialization
 {

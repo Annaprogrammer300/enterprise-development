@@ -1,7 +1,7 @@
 ﻿namespace Polyclinic.Components.Enum;
 
 /// <summary>
-/// Резус-фактор пациента.
+/// The patient's Rh factor
 /// </summary>
 public enum RhesusFactor
 {

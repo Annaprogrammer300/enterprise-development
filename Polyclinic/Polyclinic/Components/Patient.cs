@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Components;
+﻿using Polyclinic.Components.Enum;
+
+namespace Polyclinic.Components;
 
 /// <summary>
 /// The class representing the patient of the polyclinic
@@ -45,9 +47,4 @@ public class Patient
     /// </summary>
     public required string Phone { get; set; }
 
-    /// <summary>
-    /// The patient's age, calculated based on their date of birth
-    /// </summary>
-    public int Age => DateTime.Now.Year - BirthDate.Year -
-                      (DateTime.Now.DayOfYear < BirthDate.DayOfYear ? 1 : 0);
 }
