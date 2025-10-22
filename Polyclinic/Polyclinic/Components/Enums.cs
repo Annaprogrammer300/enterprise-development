@@ -1,4 +1,4 @@
-﻿namespace Polyclinic.Models;
+﻿namespace Polyclinic.Components;
 
 /// <summary>
 /// The gender of the patient

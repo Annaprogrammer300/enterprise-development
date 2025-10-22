@@ -1,4 +1,4 @@
-﻿namespace Polyclinic.Models;
+﻿namespace Polyclinic.Components;
 
 /// <summary>
 /// A class that describes a patient's appointment with a doctor

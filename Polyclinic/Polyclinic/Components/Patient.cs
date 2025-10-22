@@ -1,4 +1,4 @@
-﻿namespace Polyclinic.Models;
+﻿namespace Polyclinic.Components;
 
 /// <summary>
 /// The class representing the patient of the polyclinic
