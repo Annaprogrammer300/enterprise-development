@@ -4,16 +4,16 @@ using Polyclinic.Components.Enum;
 namespace Polyclinic.Tests;
 
 /// <summary>
-/// Класс для генерации тестовых данных (пациенты, врачи, приёмы).
-/// Используется в unit-тестах.
+/// Class for generating test data (patients, doctors, appointments)
+/// Used in unit tests
 /// </summary>
 public static class TestDataSeeder
 {
     /// <summary>
-    /// Возвращает список тестовых пациентов.
+    /// Returns a list of test patients
     /// </summary>
-    public static List<Patient> GetPatients() => new()
-    {
+    public static List<Patient> GetPatients() =>
+    [
             new Patient { PassportNumber="P001", FullName="Иванов Иван", Gender=Gender.Male, BirthDate=new DateTime(1990,5,12), 
                 Address="ул. Ленина, 1", BloodGroup=BloodGroup.I, RhesusFactor=RhesusFactor.Positive, Phone="111-111" },
             new Patient { PassportNumber="P002", FullName="Петров Петр", Gender=Gender.Male, BirthDate=new DateTime(1985,8,3), 
@@ -34,13 +34,13 @@ public static class TestDataSeeder
                 Address="ул. Пушкина, 8", BloodGroup=BloodGroup.IV, RhesusFactor=RhesusFactor.Negative, Phone="999-999" },
             new Patient { PassportNumber="P010", FullName="Зайцев Павел", Gender=Gender.Male, BirthDate=new DateTime(1993,6,6), 
                 Address="ул. Луговая, 6", BloodGroup=BloodGroup.II, RhesusFactor=RhesusFactor.Positive, Phone="101-010" }
-        };
+        ];
 
     /// <summary>
-    /// Возвращает список тестовых врачей.
+    /// Retrieves the list of test doctors
     /// </summary>
-    public static List<Doctor> GetDoctors() => new()
-    {
+    public static List<Doctor> GetDoctors() =>
+    [
             new Doctor { PassportNumber="D001", FullName="Доктор Хаус", BirthYear=1970, Specialization=Specialization.Therapist, Experience=25 },
             new Doctor { PassportNumber="D002", FullName="Айболит Иван", BirthYear=1980, Specialization=Specialization.Pediatrician, Experience=15 },
             new Doctor { PassportNumber="D003", FullName="Сергеев Павел", BirthYear=1990, Specialization=Specialization.Cardiologist, Experience=8 },
@@ -51,16 +51,16 @@ public static class TestDataSeeder
             new Doctor { PassportNumber="D008", FullName="Иванова Татьяна", BirthYear=1987, Specialization=Specialization.Dermatologist, Experience=11 },
             new Doctor { PassportNumber="D009", FullName="Павлова Светлана", BirthYear=1991, Specialization=Specialization.Ophthalmologist, Experience=9 },
             new Doctor { PassportNumber="D010", FullName="Белый Роман", BirthYear=1984, Specialization=Specialization.Psychiatrist, Experience=16 }
-        };
+        ];
 
     /// <summary>
-    /// Возвращает список тестовых записей на приём.
+    /// Returns a list of test records for the appointment
     /// </summary>
     public static List<Appointment> GetAppointments(List<Patient> patients, List<Doctor> doctors)
     {
-        var now = DateTime.Now;
-        return new List<Appointment>
-            {
+        _ = DateTime.Now;
+        return
+            [
                 new () { Patient=patients[0], Doctor=doctors[0], DateTime=new DateTime(2025, 8, 15, 14, 50,0), RoomNumber=101, IsRepeat=false },
                 new () { Patient=patients[1], Doctor=doctors[1], DateTime=new DateTime(2025, 6, 30, 12, 30,0), RoomNumber=102, IsRepeat=true },
                 new () { Patient=patients[2], Doctor=doctors[2], DateTime=new DateTime(2025, 10, 30, 12, 00,0), RoomNumber=103, IsRepeat=false },
@@ -72,6 +72,6 @@ public static class TestDataSeeder
                 new () { Patient=patients[7], Doctor=doctors[7], DateTime=new DateTime(2025, 6, 17, 12, 00,0), RoomNumber=108, IsRepeat=true },
                 new () { Patient=patients[8], Doctor=doctors[8], DateTime=new DateTime(2025, 8, 8, 16, 30,0), RoomNumber=108, IsRepeat=false },
                 new () { Patient=patients[9], Doctor=doctors[9], DateTime=new DateTime(2025, 9, 4, 12, 24,0), RoomNumber=109, IsRepeat=true }
-            };
+            ];
     }
 }
