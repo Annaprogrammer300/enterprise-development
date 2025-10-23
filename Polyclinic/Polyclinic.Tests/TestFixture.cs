@@ -87,8 +87,5 @@ public class PolyclinicFixture
                        a.DateTime.Year == year)
             .ToList();
     }
-
-
-
 }
 
