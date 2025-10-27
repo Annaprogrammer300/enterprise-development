@@ -1,4 +1,4 @@
-﻿using Polyclinic.Components;
+﻿using Polyclinic;
 
 namespace Polyclinic.Tests;
 
@@ -45,11 +45,10 @@ public class PolyclinicFixture
     /// </summary>
     public List<Patient> GetPatientsByDoctor(Doctor doctor)
     {
-        return Appointments
+        return [.. Appointments
             .Where(a => a.Doctor == doctor)
             .Select(a => a.Patient)
-            .OrderBy(p => p.FullName)
-            .ToList();
+            .OrderBy(p => p.FullName)];
     }
 
     /// <summary>
@@ -67,13 +66,12 @@ public class PolyclinicFixture
     public List<Patient> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date )
     {
         var cutoffDate = date.AddYears(-age);
-        return Appointments
+        return [.. Appointments
             .GroupBy(a => a.Patient)
             .Where(g => g.Select(a => a.Doctor).Distinct().Count() > 1)
             .Select(g => g.Key)
             .Where(p => p.BirthDate <= cutoffDate)
-            .OrderBy(p => p.BirthDate)
-            .ToList();
+            .OrderBy(p => p.BirthDate)];
     }
 
     /// <summary>
@@ -81,11 +79,10 @@ public class PolyclinicFixture
     /// </summary>
     public List<Appointment> GetAppointmentsInCabinetForMonth(int roomNumber, int month, int year)
     {
-        return Appointments
+        return [.. Appointments
             .Where(a => a.RoomNumber == roomNumber &&
                        a.DateTime.Month == month &&
-                       a.DateTime.Year == year)
-            .ToList();
+                       a.DateTime.Year == year)];
     }
 }
 

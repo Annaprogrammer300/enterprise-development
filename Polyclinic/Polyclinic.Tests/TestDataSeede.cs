@@ -1,5 +1,5 @@
-﻿using Polyclinic.Components;
-using Polyclinic.Components.Enum;
+﻿using Polyclinic;
+using Polyclinic.Enum;
 
 namespace Polyclinic.Tests;
 
