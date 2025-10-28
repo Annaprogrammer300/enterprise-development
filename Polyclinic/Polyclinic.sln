@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic", "Polyclinic\Polyclinic.csproj", "{C8BE6E6D-5543-4DEA-9C24-70810832C0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Tests", "Polyclinic.Tests\Polyclinic.Tests.csproj", "{E0F0E739-1096-45F0-9C20-38CE211799C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Domain", "Polyclinic.Tests\Polyclinic.Domain.csproj", "{E0F0E739-1096-45F0-9C20-38CE211799C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

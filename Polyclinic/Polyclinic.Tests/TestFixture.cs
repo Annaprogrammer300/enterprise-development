@@ -1,6 +1,4 @@
-﻿using Polyclinic;
-
-namespace Polyclinic.Tests;
+﻿namespace Polyclinic.Domain;
 
 /// <summary>
 /// Test fixture for Polyclinic tests
@@ -35,20 +33,23 @@ public class PolyclinicFixture
     /// <summary>
     /// Gets a doctor with specified experience
     /// </summary>
-    public List<Doctor> GetDoctorsWithExperience(int minExperience)
+    public List<int> GetDoctorsWithExperience(int minExperience)
     {
-        return Doctors.Where(d => d.Experience >= minExperience).ToList();
+        return [.. Doctors
+            .Where(d => d.Experience >= minExperience)
+            .Select(d => d.Id)
+            .Order()];
     }
 
     /// <summary>
     /// Gets patients for specific doctor
     /// </summary>
-    public List<Patient> GetPatientsByDoctor(Doctor doctor)
+    public List<string> GetPatientsByDoctor(int id)
     {
         return [.. Appointments
-            .Where(a => a.Doctor == doctor)
-            .Select(a => a.Patient)
-            .OrderBy(p => p.FullName)];
+            .Where(a => a.Doctor.Id == id)
+            .Select(a => a.Patient.FullName)
+            .OrderBy(name => name)];
     }
 
     /// <summary>
@@ -63,7 +64,7 @@ public class PolyclinicFixture
     /// <summary>
     /// Gets patients over specified age with multiple doctors
     /// </summary>
-    public List<Patient> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date )
+    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date )
     {
         var cutoffDate = date.AddYears(-age);
         return [.. Appointments
@@ -71,7 +72,8 @@ public class PolyclinicFixture
             .Where(g => g.Select(a => a.Doctor).Distinct().Count() > 1)
             .Select(g => g.Key)
             .Where(p => p.BirthDate <= cutoffDate)
-            .OrderBy(p => p.BirthDate)];
+            .Select(p => p.BirthDate)
+            .OrderBy(birthDate => birthDate)];
     }
 
     /// <summary>

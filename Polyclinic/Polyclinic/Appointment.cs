@@ -6,6 +6,11 @@
 public class Appointment
 {
     /// <summary>
+    /// Unique identifier for the appointment
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
     /// The patient who has an appointment
     /// </summary>
     public required Patient Patient { get; set; }

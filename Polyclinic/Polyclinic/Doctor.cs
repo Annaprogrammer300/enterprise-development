@@ -8,6 +8,11 @@ namespace Polyclinic;
 public class Doctor
 {
     /// <summary>
+    /// Unique identifier for the doctor
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
     /// The doctor's passport number
     /// </summary>
     public required string PassportNumber { get; set; }
