@@ -5,7 +5,6 @@
 /// </summary>
 public class PolyclinicTest(PolyclinicFixture fixture) : IClassFixture<PolyclinicFixture>
 {
-   
     /// <summary>
     /// Tests filtering doctors with work experience of at least 10 years
     /// </summary>
