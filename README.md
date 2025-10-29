@@ -30,6 +30,7 @@
 ## Модели данных
 
 ### Пациент (Patient)
+- **Id** - индифекатор пациента
 - **PassportNumber** - номер паспорта
 - **FullName** - ФИО пациента
 - **Gender** - пол (перечисление Gender)
@@ -40,6 +41,7 @@
 - **Phone** - контактный телефон
 
 ### Врач (Doctor)
+- **Id** - индифекатор врача
 - **PassportNumber** - номер паспорта
 - **FullName** - ФИО врача
 - **BirthYear** - год рождения
@@ -47,6 +49,7 @@
 - **Experience** - стаж работы (в годах)
 
 ### Запись на прием (Appointment)
+- **Id** - индифекатор приема
 - **Patient** - пациент 
 - **Doctor** - врач 
 - **DateTime** - дата и время приема
@@ -57,17 +60,17 @@
 
 ### Реализованные тесты:
 
-1. **Doctors_With_Experience_AtLeast_10Years**  
+1. **DoctorsWithExperienceAtLeast10Years**  
    Вывод информации о всех врачах со стажем работы не менее 10 лет
 
-2. **Patients_By_Specific_Doctor**  
+2. **PatientsBySpecificDoctor**  
    Вывод информации о всех пациентах, записанных к указанному врачу (упорядочено по ФИО)
 
-3. **Count_Of_Repeated_Appointments_LastMonth**  
+3. **CountOfRepeatedAppointmentsLastMonth**  
    Подсчет количества повторных приемов пациентов за последний месяц
 
-4. **Patients_Over30_With_Multiple_Doctors**  
+4. **PatientsOver30WithMultipleDoctors**  
    Вывод информации о пациентах старше 30 лет, записанных к нескольким врачам (упорядочено по дате рождения)
 
-5. **Appointments_In_Selected_Cabinet_CurrentMonth**  
+5. **AppointmentsInSelectedCabinetCurrentMonth**  
    Вывод информации о приемах за текущий месяц в выбранном кабинете
