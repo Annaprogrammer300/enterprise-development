@@ -1,67 +1,54 @@
 ﻿using AutoMapper;
+using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Patients;
-using Polyclinic.Application.Interfaces;
+using Polyclinic.Infrastructure.InMemory;
 
 namespace Polyclinic.Application.Services;
 
 /// <summary>
-/// Сервис для работы с пациентами
+/// Сервис для CRUD-операций над пациентами
 /// </summary>
-public class PatientService : IPatientService
+/// <param name="manager">Менеджер пациентов</param>
+/// <param name="mapper">Профиль маппинга</param>
+public class PatientService(IManager<Patient, int> manager, IMapper mapper) : IApplicationService<PatientDto, PatientCreateUpdateDto, int>
 {
-    private readonly IPatientManager _patientManager;
-    private readonly IMapper _mapper;
-
-    public PatientService(IPatientManager patientRepository, IMapper mapper)
+    /// <inheritdoc/>
+    public PatientDto Create(PatientCreateUpdateDto dto)
     {
-        _patientRepository = patientRepository;
-        _mapper = mapper;
+        var newPatient = mapper.Map<Patient>(dto);
+        var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(p => p.Id) : 0;
+        newPatient.Id = lastId + 1;
+        manager.Create(newPatient);
+        return mapper.Map<PatientDto>(newPatient);
     }
 
     /// <inheritdoc/>
-    public async Task<List<PatientDto>> GetAsync()
+    public void Delete(int dtoId)
     {
-        var patients = await _patientRepository.GetAllAsync();
-        return _mapper.Map<List<PatientDto>>(patients);
+        manager.Delete(dtoId);
     }
 
     /// <inheritdoc/>
-    public async Task<PatientDto?> GetAsync(int id)
+    public PatientDto Get(int dtoId)
     {
-        var patient = await _patientRepository.GetByIdAsync(id);
-        return _mapper.Map<PatientDto?>(patient);
+        var patient = manager.Read(dtoId);
+        return mapper.Map<PatientDto>(patient);
     }
 
     /// <inheritdoc/>
-    public async Task<PatientDto?> GetByPassportAsync(string? passportNumber)
+    public List<PatientDto> GetAll()
     {
-        if (string.IsNullOrEmpty(passportNumber))
-            return null;
-
-        var patient = await _patientRepository.GetByPassportAsync(passportNumber);
-        return _mapper.Map<PatientDto?>(patient);
+        var patients = manager.ReadAll();
+        return mapper.Map<List<PatientDto>>(patients);
     }
 
     /// <inheritdoc/>
-    public async Task<PatientDto> CreateAsync(PatientCreateUpdateDto dto)
+    public PatientDto Update(int dtoId, PatientCreateUpdateDto dto)
     {
-        var patient = _mapper.Map<Patient>(dto);
-        var created = await _patientRepository.CreateAsync(patient);
-        return _mapper.Map<PatientDto>(created);
-    }
-
-    /// <inheritdoc/>
-    public async Task<PatientDto> UpdateAsync(int id, PatientCreateUpdateDto dto)
-    {
-        var patient = _mapper.Map<Patient>(dto);
-        patient.Id = id;
-        var updated = await _patientRepository.UpdateAsync(patient);
-        return _mapper.Map<PatientDto>(updated);
-    }
-
-    /// <inheritdoc/>
-    public async Task DeleteAsync(int id)
-    {
-        await _patientRepository.DeleteAsync(id);
+        _ = manager.Read(dtoId) ?? throw new ArgumentException("Patient not found");
+        var updatedPatient = mapper.Map<Patient>(dto);
+        updatedPatient.Id = dtoId;
+        manager.Update(updatedPatient);
+        return mapper.Map<PatientDto>(updatedPatient);
     }
 }

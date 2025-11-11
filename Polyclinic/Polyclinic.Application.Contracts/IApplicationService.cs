@@ -1,48 +1,47 @@
-﻿using Polyclinic.Application.Contracts.Patients;
-using Polyclinic.Application.Contracts.Doctors;
-using Polyclinic.Application.Contracts.Appointments;
-
-namespace Polyclinic.Application.Contracts;
+﻿namespace Polyclinic.Application.Contracts;
 
 /// <summary>
-/// Базовый интерфейс аппликейшен службы
+/// Интерфейс службы приложения для CRUD операций
 /// </summary>
-/// <typeparam name="TDto">Тип DTO</typeparam>
-/// <typeparam name="TCreateUpdateDto">Тип DTO для создания/обновления</typeparam>
-/// <typeparam name="TKey">Тип ключа</typeparam>
+/// <typeparam name="TDto">DTO для Get-запросов</typeparam>
+/// <typeparam name="TCreateUpdateDto">DTO для Post/Put-запросов</typeparam>
+/// <typeparam name="TKey">Тип идентификатора DTO</typeparam>
 public interface IApplicationService<TDto, TCreateUpdateDto, TKey>
+    where TDto : class
+    where TCreateUpdateDto : class
+    where TKey : struct
 {
     /// <summary>
-    /// Получает все сущности
+    /// Создание DTO
     /// </summary>
-    /// <returns>Коллекция DTO</returns>
-    public Task<List<TDto>> GetAsync();
+    /// <param name="dto">DTO</param>
+    /// <returns></returns>
+    public TDto Create(TCreateUpdateDto dto);
 
     /// <summary>
-    /// Получает сущность по идентификатору
+    /// Получение DTO по идентификатору
     /// </summary>
-    /// <param name="id">Идентификатор сущности</param>
-    /// <returns>DTO сущности</returns>
-    public Task<TDto?> GetAsync(TKey id);
+    /// <param name="dtoId">Идентификатор DTO</param>
+    /// <returns></returns>
+    public TDto Get(TKey dtoId);
 
     /// <summary>
-    /// Создает новую сущность
+    /// Получение всего списка DTO
     /// </summary>
-    /// <param name="dto">DTO для создания</param>
-    /// <returns>Созданная DTO</returns>
-    public Task<TDto> CreateAsync(TCreateUpdateDto dto);
+    /// <returns></returns>
+    public List<TDto> GetAll();
 
     /// <summary>
-    /// Обновляет существующую сущность
+    /// Обновление DTO
     /// </summary>
-    /// <param name="id">Идентификатор сущности</param>
-    /// <param name="dto">DTO для обновления</param>
-    /// <returns>Обновленная DTO</returns>
-    public Task<TDto> UpdateAsync(TKey id, TCreateUpdateDto dto);
+    /// <param name="dtoId">Идентификатор DTO</param>
+    /// <param name="dto">DTO</param>
+    /// <returns></returns>
+    public TDto Update(TKey dtoId, TCreateUpdateDto dto);
 
     /// <summary>
-    /// Удаляет сущность
+    /// Удаление DTO
     /// </summary>
-    /// <param name="id">Идентификатор сущности</param>
-    public Task DeleteAsync(TKey id);
+    /// <param name="dtoId">Идентификатор DTO</param>
+    public void Delete(TKey dtoId);
 }

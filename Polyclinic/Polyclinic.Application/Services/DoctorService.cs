@@ -1,78 +1,54 @@
 ﻿using AutoMapper;
+using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Doctors;
-using Polyclinic.Enum;
-using Polyclinic.Application.Interfaces;
+using Polyclinic.Infrastructure.InMemory;
 
 namespace Polyclinic.Application.Services;
 
 /// <summary>
-/// Сервис для работы с врачами
+/// Сервис для CRUD-операций над врачами
 /// </summary>
-public class DoctorService : IDoctorService
+/// <param name="manager">Менеджер врачей</param>
+/// <param name="mapper">Профиль маппинга</param>
+public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApplicationService<DoctorDto, DoctorCreateUpdateDto, int>
 {
-    private readonly IDoctorManager _doctorManager;
-    private readonly IMapper _mapper;
-
-    public DoctorService(IDoctorManager doctorRepository, IMapper mapper)
+    /// <inheritdoc/>
+    public DoctorDto Create(DoctorCreateUpdateDto dto)
     {
-        _doctorRepository = doctorRepository;
-        _mapper = mapper;
+        var newDoctor = mapper.Map<Doctor>(dto);
+        var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(d => d.Id) : 0;
+        newDoctor.Id = lastId + 1;
+        manager.Create(newDoctor);
+        return mapper.Map<DoctorDto>(newDoctor);
     }
 
     /// <inheritdoc/>
-    public async Task<List<DoctorDto>> GetAsync()
+    public void Delete(int dtoId)
     {
-        var doctors = await _doctorRepository.GetAllAsync();
-        return _mapper.Map<List<DoctorDto>>(doctors);
+        manager.Delete(dtoId);
     }
 
     /// <inheritdoc/>
-    public async Task<DoctorDto?> GetAsync(int id)
+    public DoctorDto Get(int dtoId)
     {
-        var doctor = await _doctorRepository.GetByIdAsync(id);
-        return _mapper.Map<DoctorDto?>(doctor);
+        var doctor = manager.Read(dtoId);
+        return mapper.Map<DoctorDto>(doctor);
     }
 
     /// <inheritdoc/>
-    public async Task<List<DoctorDto>> GetBySpecializationAsync(Specialization? specialization)
+    public List<DoctorDto> GetAll()
     {
-        if (specialization == null)
-            return new List<DoctorDto>();
-
-        var doctors = await _doctorRepository.GetBySpecializationAsync(specialization.Value);
-        return _mapper.Map<List<DoctorDto>>(doctors);
+        var doctors = manager.ReadAll();
+        return mapper.Map<List<DoctorDto>>(doctors);
     }
 
     /// <inheritdoc/>
-    public async Task<List<DoctorDto>> GetWithMinExperienceAsync(int? minExperience)
+    public DoctorDto Update(int dtoId, DoctorCreateUpdateDto dto)
     {
-        if (minExperience == null)
-            return new List<DoctorDto>();
-
-        var doctors = await _doctorRepository.GetWithMinExperienceAsync(minExperience.Value);
-        return _mapper.Map<List<DoctorDto>>(doctors);
-    }
-
-    /// <inheritdoc/>
-    public async Task<DoctorDto> CreateAsync(DoctorCreateUpdateDto dto)
-    {
-        var doctor = _mapper.Map<Doctor>(dto);
-        var created = await _doctorRepository.CreateAsync(doctor);
-        return _mapper.Map<DoctorDto>(created);
-    }
-
-    /// <inheritdoc/>
-    public async Task<DoctorDto> UpdateAsync(int id, DoctorCreateUpdateDto dto)
-    {
-        var doctor = _mapper.Map<Doctor>(dto);
-        doctor.Id = id;
-        var updated = await _doctorRepository.UpdateAsync(doctor);
-        return _mapper.Map<DoctorDto>(updated);
-    }
-
-    /// <inheritdoc/>
-    public async Task DeleteAsync(int id)
-    {
-        await _doctorRepository.DeleteAsync(id);
+        _ = manager.Read(dtoId) ?? throw new ArgumentException("Doctor not found");
+        var updatedDoctor = mapper.Map<Doctor>(dto);
+        updatedDoctor.Id = dtoId;
+        manager.Update(updatedDoctor);
+        return mapper.Map<DoctorDto>(updatedDoctor);
     }
 }

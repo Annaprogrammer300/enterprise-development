@@ -1,53 +1,33 @@
 ﻿using AutoMapper;
 using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Appointments;
-using Polyclinic.Application.Interfaces;
-
 
 namespace Polyclinic.Application.Services;
 
 /// <summary>
-/// Сервис для аналитики
+/// Аналитическая служба
 /// </summary>
-public class AnalyticsService : IAnalyticsService
+/// <param name="polyclinicManager">Доменная служба для запуска юзкейсов поликлиники</param>
+/// <param name="mapper">Профиль маппинга</param>
+public class AnalyticsService(PolyclinicManager polyclinicManager, IMapper mapper) : IAnalyticsService
 {
-    private readonly IPolyclinicManager _polyclinicManager;
-    private readonly IMapper _mapper;
-
-    public AnalyticsService(IPolyclinicManager polyclinicRepository, IMapper mapper)
-    {
-        _polyclinicRepository = polyclinicRepository;
-        _mapper = mapper;
-    }
+    /// <inheritdoc/>
+    public List<int> GetDoctorsWithExperienceAtLeast(int minExperience) =>
+        polyclinicManager.GetDoctorsWithExperienceAtLeast(minExperience);
 
     /// <inheritdoc/>
-    public async Task<List<int>> GetDoctorsWithExperienceAtLeastAsync(int minExperience)
-    {
-        return await _polyclinicRepository.GetDoctorsWithExperienceAtLeastAsync(minExperience);
-    }
+    public List<string> GetPatientsByDoctor(int doctorId) =>
+        polyclinicManager.GetPatientsByDoctor(doctorId);
 
     /// <inheritdoc/>
-    public async Task<List<string>> GetPatientsByDoctorAsync(int doctorId)
-    {
-        return await _polyclinicRepository.GetPatientsByDoctorAsync(doctorId);
-    }
+    public int CountRepeatedAppointmentsLastMonth(DateTime lastMonth, DateTime today) =>
+        polyclinicManager.CountRepeatedAppointmentsLastMonth(lastMonth, today);
 
     /// <inheritdoc/>
-    public async Task<int> CountRepeatedAppointmentsLastMonthAsync(DateTime lastMonth, DateTime today)
-    {
-        return await _polyclinicRepository.CountRepeatedAppointmentsLastMonthAsync(lastMonth, today);
-    }
+    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date) =>
+        polyclinicManager.GetPatientsOverAgeWithMultipleDoctors(age, date);
 
     /// <inheritdoc/>
-    public async Task<List<DateTime>> GetPatientsOverAgeWithMultipleDoctorsAsync(int age, DateTime date)
-    {
-        return await _polyclinicRepository.GetPatientsOverAgeWithMultipleDoctorsAsync(age, date);
-    }
-
-    /// <inheritdoc/>
-    public async Task<List<AppointmentDto>> GetAppointmentsInCabinetForCurrentMonthAsync(int roomNumber, DateTime currentDate)
-    {
-        var appointments = await _polyclinicRepository.GetAppointmentsInCabinetForCurrentMonthAsync(roomNumber, currentDate);
-        return _mapper.Map<List<AppointmentDto>>(appointments);
-    }
+    public List<AppointmentDto> GetAppointmentsInCabinetForCurrentMonth(int roomNumber, DateTime currentDate) =>
+        mapper.Map<List<AppointmentDto>>(polyclinicManager.GetAppointmentsInCabinetForCurrentMonth(roomNumber, currentDate));
 }

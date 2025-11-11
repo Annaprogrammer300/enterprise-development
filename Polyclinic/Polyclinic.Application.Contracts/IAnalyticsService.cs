@@ -3,32 +3,45 @@
 namespace Polyclinic.Application.Contracts;
 
 /// <summary>
-/// Service for analytics and reporting
+/// Интерфейс службы аналитики
 /// </summary>
 public interface IAnalyticsService
 {
     /// <summary>
-    /// Get doctors with experience at least specified years
+    /// Получение врачей с опытом работы не менее указанного
     /// </summary>
-    public Task<List<int>> GetDoctorsWithExperienceAtLeastAsync(int minExperience);
+    /// <param name="minExperience">Минимальный опыт работы</param>
+    /// <returns></returns>
+    public List<int> GetDoctorsWithExperienceAtLeast(int minExperience);
 
     /// <summary>
-    /// Get patients for specific doctor ordered by full name
+    /// Получение пациентов по указанному врачу
     /// </summary>
-    public Task<List<string>> GetPatientsByDoctorAsync(int doctorId);
+    /// <param name="doctorId">Идентификатор врача</param>
+    /// <returns></returns>
+    public List<string> GetPatientsByDoctor(int doctorId);
 
     /// <summary>
-    /// Count repeated appointments in the last month
+    /// Подсчет повторных приемов за последний месяц
     /// </summary>
-    public Task<int> CountRepeatedAppointmentsLastMonthAsync(DateTime lastMonth, DateTime today);
+    /// <param name="lastMonth">Дата начала последнего месяца</param>
+    /// <param name="today">Текущая дата</param>
+    /// <returns></returns>
+    public int CountRepeatedAppointmentsLastMonth(DateTime lastMonth, DateTime today);
 
     /// <summary>
-    /// Get patients over specified age who visited multiple doctors
+    /// Получение пациентов старше указанного возраста, которые посещали нескольких врачей
     /// </summary>
-    public Task<List<DateTime>> GetPatientsOverAgeWithMultipleDoctorsAsync(int age, DateTime date);
+    /// <param name="age">Минимальный возраст</param>
+    /// <param name="date">Текущая дата для расчета возраста</param>
+    /// <returns></returns>
+    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date);
 
     /// <summary>
-    /// Get appointments in selected cabinet for current month
+    /// Получение приемов в указанном кабинете за текущий месяц
     /// </summary>
-    public Task<List<AppointmentDto>> GetAppointmentsInCabinetForCurrentMonthAsync(int roomNumber, DateTime currentDate);
+    /// <param name="roomNumber">Номер кабинета</param>
+    /// <param name="currentDate">Текущая дата</param>
+    /// <returns></returns>
+    public List<AppointmentDto> GetAppointmentsInCabinetForCurrentMonth(int roomNumber, DateTime currentDate);
 }
