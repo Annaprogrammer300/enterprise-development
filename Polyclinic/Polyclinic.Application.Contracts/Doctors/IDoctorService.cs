@@ -3,21 +3,21 @@
 namespace Polyclinic.Application.Contracts.Doctors;
 
 /// <summary>
-/// Наследник аппликейшен службы для врачей
+/// Heir to the medical application service
 /// </summary>
 public interface IDoctorService : IApplicationService<DoctorDto, DoctorCreateUpdateDto, int>
 {
     /// <summary>
-    /// Получает врачей по специализации
+    /// Gets doctors by specialization
     /// </summary>
-    /// <param name="specialization">Специализация</param>
-    /// <returns>Список DTO врачей</returns>
+    /// <param name="specialization">Specialization</param>
+    /// <returns>List of DTO doctors</returns>
     public Task<List<DoctorDto>> GetBySpecializationAsync(Specialization? specialization);
 
     /// <summary>
-    /// Получает врачей с минимальным опытом
+    /// Receives doctors with minimal experience
     /// </summary>
-    /// <param name="minExperience">Минимальный опыт</param>
-    /// <returns>Список DTO врачей</returns>
+    /// <param name="minExperience">Minimal experience</param>
+    /// <returns>List of DTO doctors</returns>
     public Task<List<DoctorDto>> GetWithMinExperienceAsync(int? minExperience);
 }

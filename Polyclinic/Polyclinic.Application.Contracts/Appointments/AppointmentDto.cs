@@ -1,17 +1,17 @@
 ﻿namespace Polyclinic.Application.Contracts.Appointments;
 
 /// <summary>
-/// DTO для GET запросов к записям на прием
+/// DTO for GET requests to appointment appointments
 /// </summary>
-/// <param name="Id">Идентификатор записи</param>
-/// <param name="PatientId">Идентификатор пациента</param>
-/// <param name="PatientFullName">Полное имя пациента</param>
-/// <param name="DoctorId">Идентификатор врача</param>
-/// <param name="DoctorFullName">Полное имя врача</param>
-/// <param name="DoctorSpecialization">Специализация врача</param>
-/// <param name="DateTime">Дата и время приема</param>
-/// <param name="RoomNumber">Номер кабинета</param>
-/// <param name="IsRepeat">Признак повторного приема</param>
+/// <param name="Id">Appointment ID</param>
+/// <param name="patientID">Patient ID</param>
+/// <param name="PatientFullName">Patient's full name</param>
+/// <param name="DoctorID">Doctor's ID</param>
+/// <param name="DoctorFullName">Full name of the doctor</param>
+/// <param name="DoctorSpecialization">Specialization of the doctor</param>
+/// <param name="DateTime">Date and time of reception</param>
+/// <param name="roomNumber">Cabinet number</param>
+/// <param name="IsRepeat">Indication of repeat admission</param>
 public record AppointmentDto(
     int Id,
     int PatientId,

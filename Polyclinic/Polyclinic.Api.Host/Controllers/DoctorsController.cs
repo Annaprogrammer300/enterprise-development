@@ -10,9 +10,9 @@ namespace Polyclinic.Api.Host.Controllers;
 public class DoctorsController(IApplicationService<DoctorDto, DoctorCreateUpdateDto, int> service, ILogger<DoctorsController> logger) : ControllerBase
 {
     /// <summary>
-    /// Получить всех врачей
+    /// Get all doctors
     /// </summary>
-    /// <returns>Список всех врачей</returns>
+    /// <returns>List of all doctors</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<DoctorDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -33,10 +33,10 @@ public class DoctorsController(IApplicationService<DoctorDto, DoctorCreateUpdate
     }
 
     /// <summary>
-    /// Получить врача по идентификатору
+    /// Get a doctor by ID
     /// </summary>
-    /// <param name="id">Идентификатор врача</param>
-    /// <returns>Данные врача</returns>
+    /// <param name="id">Doctor's ID</param>
+    /// <returns>Doctor's data</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,10 +63,10 @@ public class DoctorsController(IApplicationService<DoctorDto, DoctorCreateUpdate
     }
 
     /// <summary>
-    /// Создать нового врача
+    /// Create a new doctor
     /// </summary>
-    /// <param name="dto">Данные для создания врача</param>
-    /// <returns>Созданный врач</returns>
+    /// <param name="dto">Data for creating a doctor</param>
+    /// <returns>The created doctor</returns>
     [HttpPost]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,11 +88,11 @@ public class DoctorsController(IApplicationService<DoctorDto, DoctorCreateUpdate
     }
 
     /// <summary>
-    /// Обновить данные врача
+    /// Update doctor
     /// </summary>
-    /// <param name="id">Идентификатор врача</param>
-    /// <param name="dto">Данные для обновления</param>
-    /// <returns>Обновленные данные врача</returns>
+    /// <param name="id">Doctor's ID</param>
+    /// <param name="dto">Update data</param>
+    /// <returns>Updated doctor's data</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -120,10 +120,10 @@ public class DoctorsController(IApplicationService<DoctorDto, DoctorCreateUpdate
     }
 
     /// <summary>
-    /// Удалить врача
+    /// Delete the doctor
     /// </summary>
-    /// <param name="id">Идентификатор врача</param>
-    /// <returns>Результат операции</returns>
+    /// <param name="id">Doctor's ID</param>
+    /// <returns>The result of the operation</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

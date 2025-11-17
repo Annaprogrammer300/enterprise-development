@@ -6,13 +6,17 @@ using Polyclinic.Infrastructure.InMemory;
 namespace Polyclinic.Application.Services;
 
 /// <summary>
-/// Сервис для CRUD-операций над записями на прием
+/// Service for CRUD operations on appointment appointments
 /// </summary>
-/// <param name="manager">Менеджер записей</param>
-/// <param name="mapper">Профиль маппинга</param>
+/// <param name="manager">Record manager</param>
+/// <param name="mapper">Mapping profile</param>
 public class AppointmentService(IManager<Appointment, int> manager, IMapper mapper) : IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int>
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Creates a new appointment entity from the provided DTO
+    /// </summary>
+    /// <param name="dto">Data transfer object containing appointment creation details</param>
+    /// <returns>AppointmentDto representing the created appointment</returns>
     public AppointmentDto Create(AppointmentCreateUpdateDto dto)
     {
         var newAppointment = mapper.Map<Appointment>(dto);
@@ -22,27 +26,43 @@ public class AppointmentService(IManager<Appointment, int> manager, IMapper mapp
         return mapper.Map<AppointmentDto>(newAppointment);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Deletes an appointment entity by its unique identifier
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the appointment to delete</param>
     public void Delete(int dtoId)
     {
         manager.Delete(dtoId);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves an appointment entity by its unique identifier
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the appointment</param>
+    /// <returns>AppointmentDto representing the found appointment</returns>
     public AppointmentDto Get(int dtoId)
     {
         var appointment = manager.Read(dtoId);
         return mapper.Map<AppointmentDto>(appointment);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves all appointment entities
+    /// </summary>
+    /// <returns>List of AppointmentDto representing all appointments</returns>
     public List<AppointmentDto> GetAll()
     {
         var appointments = manager.ReadAll();
         return mapper.Map<List<AppointmentDto>>(appointments);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Updates an existing appointment entity with the provided DTO data
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the appointment to update</param>
+    /// <param name="dto">Data transfer object containing updated appointment details</param>
+    /// <returns>AppointmentDto representing the updated appointment</returns>
+    /// <exception cref="ArgumentException">Thrown when appointment with specified ID is not found</exception>
     public AppointmentDto Update(int dtoId, AppointmentCreateUpdateDto dto)
     {
         _ = manager.Read(dtoId) ?? throw new ArgumentException("Appointment not found");

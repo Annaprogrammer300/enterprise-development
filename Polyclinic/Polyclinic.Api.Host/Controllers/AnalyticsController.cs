@@ -9,10 +9,10 @@ namespace Polyclinic.Api.Host.Controllers;
 public class AnalyticsController(IAnalyticsService analyticsService, ILogger<AnalyticsController> logger) : ControllerBase
 {
     /// <summary>
-    /// Получить список докторов с опытом работы не менее указанного количества лет
+    /// Get a list of doctors with at least the specified number of years of experience
     /// </summary>
-    /// <param name="minExperience">Минимальный опыт работы в годах</param>
-    /// <returns>Список идентификаторов докторов</returns>
+    /// <param name="minExperience">Minimum work experience in years</param>
+    /// <returns>List of doctor IDs</returns>
     [HttpGet("doctors/experience/{minExperience}")]
     public ActionResult<List<int>> GetDoctorsWithExperienceAtLeast(int minExperience)
     {
@@ -29,10 +29,10 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     }
 
     /// <summary>
-    /// Получить список пациентов по идентификатору доктора
+    /// Get a list of patients by doctor ID
     /// </summary>
-    /// <param name="doctorId">Идентификатор доктора</param>
-    /// <returns>Список пациентов</returns>
+    /// <param name="DoctorID">Doctor's ID</param>
+    /// <returns>List of patients</returns>
     [HttpGet("patients/by-doctor/{doctorId}")]
     public ActionResult<List<string>> GetPatientsByDoctor(int doctorId)
     {
@@ -49,11 +49,11 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     }
 
     /// <summary>
-    /// Получить количество повторных назначений за последний месяц
+    /// Get the number of repeat appointments in the last month
     /// </summary>
-    /// <param name="lastMonth">Начало периода (последний месяц)</param>
-    /// <param name="today">Конец периода (сегодня)</param>
-    /// <returns>Количество повторных назначений</returns>
+    /// <param name="lastMonth">Start of the period (last month)</param>
+    /// <param name="today">End of the period (today)</param>
+    /// <returns>Number of repeat appointments</returns>
     [HttpGet("appointments/repeated-count")]
     public ActionResult<int> GetRepeatedAppointmentsCount([FromQuery] DateTime lastMonth, [FromQuery] DateTime today)
     {
@@ -70,11 +70,11 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     }
 
     /// <summary>
-    /// Получить список дат для пациентов старше указанного возраста с несколькими докторами
+    /// Get a list of dates for patients over the specified age with multiple doctors
     /// </summary>
-    /// <param name="age">Минимальный возраст</param>
-    /// <param name="date">Дата для расчета возраста</param>
-    /// <returns>Список дат</returns>
+    /// <param name="age">Minimum age</param>
+    /// <param name="date">The date for calculating the age</param>
+    /// <returns>List of dates</returns>
     [HttpGet("patients/over-age-with-multiple-doctors")]
     public ActionResult<List<DateTime>> GetPatientsOverAgeWithMultipleDoctors([FromQuery] int age, [FromQuery] DateTime date)
     {
@@ -91,11 +91,11 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     }
 
     /// <summary>
-    /// Получить назначения в кабинете за текущий месяц
+    /// Get appointments in the cabinet for the current month
     /// </summary>
-    /// <param name="roomNumber">Номер кабинета</param>
-    /// <param name="currentDate">Текущая дата</param>
-    /// <returns>Список назначений</returns>
+    /// <param name="roomNumber">Cabinet number</param>
+    /// <param name="currentDate">Current date</param>
+    /// <returns>List of appointments</returns>
     [HttpGet("appointments/in-cabinet/{roomNumber}")]
     public ActionResult<List<AppointmentDto>> GetAppointmentsInCabinetForCurrentMonth(int roomNumber, [FromQuery] DateTime currentDate)
     {

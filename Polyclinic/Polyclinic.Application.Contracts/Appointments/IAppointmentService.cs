@@ -1,29 +1,29 @@
 ﻿namespace Polyclinic.Application.Contracts.Appointments;
 
 /// <summary>
-/// Наследник аппликейшен службы для записей на прием
+/// The heir of the application service for appointment appointments
 /// </summary>
 public interface IAppointmentService : IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int>
 {
     /// <summary>
-    /// Получает записи по пациенту
+    /// Gets patient records
     /// </summary>
-    /// <param name="patientId">Идентификатор пациента</param>
-    /// <returns>Список DTO записей</returns>
+    /// <param name="patientID">Patient ID</param>
+    /// <returns>List of DTO records</returns>
     public Task<List<AppointmentDto>> GetByPatientAsync(int? patientId);
 
     /// <summary>
-    /// Получает записи по врачу
+    /// Gets doctor's notes
     /// </summary>
-    /// <param name="doctorId">Идентификатор врача</param>
-    /// <returns>Список DTO записей</returns>
+    /// <param name="DoctorID">Doctor's ID</param>
+    /// <returns>List of DTO records</returns>
     public Task<List<AppointmentDto>> GetByDoctorAsync(int? doctorId);
 
     /// <summary>
-    /// Получает записи по диапазону дат
+    /// Gets records by date range
     /// </summary>
-    /// <param name="startDate">Начальная дата</param>
-    /// <param name="endDate">Конечная дата</param>
-    /// <returns>Список DTO записей</returns>
+    /// <param name="startDate">Starting date</param>
+    /// <param name="endDate">End date</param>
+    /// <returns>List of DTO records</returns>
     public Task<List<AppointmentDto>> GetByDateRangeAsync(DateTime? startDate, DateTime? endDate);
 }

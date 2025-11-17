@@ -1,16 +1,16 @@
 ﻿namespace Polyclinic.Application.Contracts.Patients;
 
 /// <summary>
-/// DTO для POST/PUT запросов к пациентам
+/// DTO for POST/PUT requests to patients
 /// </summary>
-/// <param name="PassportNumber">Номер паспорта пациента</param>
-/// <param name="FullName">Полное имя пациента</param>
-/// <param name="Gender">Пол пациента</param>
-/// <param name="BirthDate">Дата рождения пациента</param>
-/// <param name="Address">Адрес проживания пациента</param>
-/// <param name="BloodGroup">Группа крови пациента</param>
-/// <param name="RhesusFactor">Резус-фактор пациента</param>
-/// <param name="Phone">Контактный телефон пациента</param>
+/// <param name="PassportNumber">Patient's passport number</param>
+/// <param name="FullName">Patient's full name</param>
+/// <param name="Gender">Patient's gender</param>
+/// <param name="BirthDate">Patient's date of birth</param>
+/// <param name="Address">Patient's residential address</param>
+/// <param name="BloodGroup">Patient's blood type</param>
+/// <param name="RhesusFactor">Patient's Rh factor</param>
+/// <param name="Phone">Patient's contact phone number</param>
 public record PatientCreateUpdateDto(
     string? PassportNumber,
     string? FullName,

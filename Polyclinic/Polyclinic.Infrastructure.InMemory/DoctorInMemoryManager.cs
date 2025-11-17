@@ -3,37 +3,52 @@
 namespace Polyclinic.Infrastructure.InMemory;
 
 /// <summary>
-/// Имплементация менеджера для врачей
+/// In-memory implementation of the manager for doctors providing CRUD operations
 /// </summary>
 public class DoctorInMemoryManager : IManager<Doctor, int>
 {
     private readonly List<Doctor> _doctors;
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Initializes a new instance of the DoctorInMemoryManager class with pre-seeded test data
+    /// </summary>
     public DoctorInMemoryManager()
     {
         _doctors = TestDataSeeder.GetDoctors();
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Creates a new doctor entity and adds it to the in-memory collection
+    /// </summary>
+    /// <param name="entity">The doctor entity to create</param>
     public void Create(Doctor entity)
     {
         _doctors.Add(entity);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves a doctor entity by its unique identifier
+    /// </summary>
+    /// <param name="entityId">The unique identifier of the doctor</param>
+    /// <returns>The doctor entity if found, otherwise null</returns>
     public Doctor Read(int entityId)
     {
         return _doctors.FirstOrDefault(d => d.Id == entityId);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves all doctor entities from the in-memory collection
+    /// </summary>
+    /// <returns>A list of all doctor entities</returns>
     public List<Doctor> ReadAll()
     {
         return _doctors;
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Updates an existing doctor entity in the in-memory collection
+    /// </summary>
+    /// <param name="entity">The doctor entity with updated data</param>
     public void Update(Doctor entity)
     {
         var existingDoctor = Read(entity.Id);
@@ -44,7 +59,10 @@ public class DoctorInMemoryManager : IManager<Doctor, int>
         }
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Deletes a doctor entity from the in-memory collection by its identifier
+    /// </summary>
+    /// <param name="entityId">The unique identifier of the doctor to delete</param>
     public void Delete(int entityId)
     {
         var doctor = Read(entityId);

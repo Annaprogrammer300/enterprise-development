@@ -9,9 +9,9 @@ namespace Polyclinic.Api.Host.Controllers;
 public class AppointmentsController(IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int> service, ILogger<AppointmentsController> logger) : ControllerBase
 {
     /// <summary>
-    /// Получить все записи на прием
+    /// Get all appointment appointments
     /// </summary>
-    /// <returns>Список всех записей на прием</returns>
+    /// <returns>List of all appointment appointments</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AppointmentDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -32,10 +32,10 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     }
 
     /// <summary>
-    /// Получить запись на прием по идентификатору
+    /// Get an appointment by ID
     /// </summary>
-    /// <param name="id">Идентификатор записи</param>
-    /// <returns>Запись на прием</returns>
+    /// <param name="id">Record ID</param>
+    /// <returns>Make an appointment</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -62,10 +62,10 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     }
 
     /// <summary>
-    /// Создать новую запись на прием
+    /// Create a new appointment
     /// </summary>
-    /// <param name="dto">Данные для создания записи</param>
-    /// <returns>Созданная запись</returns>
+    /// <param name="dto">Data for creating a record</param>
+    /// <returns>The created record</returns>
     [HttpPost]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,11 +87,11 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     }
 
     /// <summary>
-    /// Обновить запись на прием
+    /// Update the appointment
     /// </summary>
-    /// <param name="id">Идентификатор записи</param>
-    /// <param name="dto">Данные для обновления</param>
-    /// <returns>Обновленная запись</returns>
+    /// <param name="id">Record ID</param>
+    /// <param name="dto">Update data</param>
+    /// <returns>Updated entry</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -119,10 +119,10 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     }
 
     /// <summary>
-    /// Удалить запись на прием
+    /// Delete an appointment
     /// </summary>
-    /// <param name="id">Идентификатор записи</param>
-    /// <returns>Результат операции</returns>
+    /// <param name="id">Record ID</param>
+    /// <returns>The result of the operation</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

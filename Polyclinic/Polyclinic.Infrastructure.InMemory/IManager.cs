@@ -1,42 +1,42 @@
 ﻿namespace Polyclinic.Infrastructure.InMemory;
 
 /// <summary>
-/// Интерфейс менеджера для CRUD операций
+/// The manager's interface for CRUD operations
 /// </summary>
-/// <typeparam name="TEntity">Тип сущности, доступ к коллекции которых абстрагируем</typeparam>
-/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+/// <typeparam name="TEntity">The type of entity whose collection is being abstracted</typeparam>
+/// <typeparam name="TKey">The type of the entity ID</typeparam>
 public interface IManager<TEntity, TKey>
     where TEntity : class
     where TKey : struct
 {
     /// <summary>
-    /// Создание новой сущности
+    /// Creating a new entity
     /// </summary>
-    /// <param name="entity">Новая сущность</param>
+    /// <param name="entity">New entity</param>
     public void Create(TEntity entity);
 
     /// <summary>
-    /// Получение сущности по идентификатору
+    /// Getting an entity by ID
     /// </summary>
-    /// <param name="entityId">Идентификатор сущности</param>
-    /// <returns>Сущность</returns>
+    /// <param name="EntityId">Entity ID</param>
+    /// <returns>Entity</returns>
     public TEntity Read(TKey entityId);
 
     /// <summary>
-    /// Получение всего списка сущностей
+    /// Getting the entire list of entities
     /// </summary>
     /// <returns></returns>
     public List<TEntity> ReadAll();
 
     /// <summary>
-    /// Обновление сущности
+    /// Updating the entity
     /// </summary>
-    /// <param name="entity">Сущность</param>
+    /// <param name="entity">The entity</param>
     public void Update(TEntity entity);
 
     /// <summary>
-    /// Удаление сущности по идентификатору
+    /// Deleting an entity by ID
     /// </summary>
-    /// <param name="entityId">Идентификатор сущности</param>
+    /// <param name="EntityId">Entity ID</param>
     public void Delete(TKey entityId);
 }

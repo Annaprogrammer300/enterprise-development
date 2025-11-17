@@ -6,13 +6,17 @@ using Polyclinic.Infrastructure.InMemory;
 namespace Polyclinic.Application.Services;
 
 /// <summary>
-/// Сервис для CRUD-операций над врачами
+/// Service for CRUD operations on doctors
 /// </summary>
-/// <param name="manager">Менеджер врачей</param>
-/// <param name="mapper">Профиль маппинга</param>
+/// <param name="manager">Doctors' manager</param>
+/// <param name="mapper">Mapping profile</param>
 public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApplicationService<DoctorDto, DoctorCreateUpdateDto, int>
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Creates a new doctor entity from the provided DTO
+    /// </summary>
+    /// <param name="dto">Data transfer object containing doctor creation details</param>
+    /// <returns>DoctorDto representing the created doctor</returns>
     public DoctorDto Create(DoctorCreateUpdateDto dto)
     {
         var newDoctor = mapper.Map<Doctor>(dto);
@@ -22,27 +26,43 @@ public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApp
         return mapper.Map<DoctorDto>(newDoctor);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Deletes a doctor entity by its unique identifier
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the doctor to delete</param>
     public void Delete(int dtoId)
     {
         manager.Delete(dtoId);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves a doctor entity by its unique identifier
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the doctor</param>
+    /// <returns>DoctorDto representing the found doctor</returns>
     public DoctorDto Get(int dtoId)
     {
         var doctor = manager.Read(dtoId);
         return mapper.Map<DoctorDto>(doctor);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves all doctor entities
+    /// </summary>
+    /// <returns>List of DoctorDto representing all doctors</returns>
     public List<DoctorDto> GetAll()
     {
         var doctors = manager.ReadAll();
         return mapper.Map<List<DoctorDto>>(doctors);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Updates an existing doctor entity with the provided DTO data
+    /// </summary>
+    /// <param name="dtoId">The unique identifier of the doctor to update</param>
+    /// <param name="dto">Data transfer object containing updated doctor details</param>
+    /// <returns>DoctorDto representing the updated doctor</returns>
+    /// <exception cref="ArgumentException">Thrown when doctor with specified ID is not found</exception>
     public DoctorDto Update(int dtoId, DoctorCreateUpdateDto dto)
     {
         _ = manager.Read(dtoId) ?? throw new ArgumentException("Doctor not found");

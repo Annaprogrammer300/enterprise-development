@@ -6,10 +6,13 @@ using Polyclinic.Application.Contracts.Appointments;
 namespace Polyclinic.Application;
 
 /// <summary>
-/// Профиль AutoMapper для маппинга DTO
+/// AutoMapper profile for DTO mapping between domain entities and application contracts
 /// </summary>
 public class PolyclinicProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the PolyclinicProfile class and configures entity-DTO mappings
+    /// </summary>
     public PolyclinicProfile()
     {
         // Patient mappings

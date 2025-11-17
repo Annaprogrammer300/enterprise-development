@@ -9,9 +9,9 @@ namespace Polyclinic.Api.Host.Controllers;
 public class PatientsController(IApplicationService<PatientDto, PatientCreateUpdateDto, int> service, ILogger<PatientsController> logger) : ControllerBase
 {
     /// <summary>
-    /// Получить всех пациентов
+    /// Get all patients
     /// </summary>
-    /// <returns>Список всех пациентов</returns>
+    /// <returns>List of all patients</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PatientDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -32,10 +32,10 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     }
 
     /// <summary>
-    /// Получить пациента по идентификатору
+    /// Get a patient by ID
     /// </summary>
-    /// <param name="id">Идентификатор пациента</param>
-    /// <returns>Данные пациента</returns>
+    /// <param name="id">Patient ID</param>
+    /// <returns>Patient data</returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -62,10 +62,10 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     }
 
     /// <summary>
-    /// Создать нового пациента
+    /// Create a new patient
     /// </summary>
-    /// <param name="dto">Данные для создания пациента</param>
-    /// <returns>Созданный пациент</returns>
+    /// <param name="dto">Patient creation data</param>
+    /// <returns>The created patient</returns>
     [HttpPost]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,11 +87,11 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     }
 
     /// <summary>
-    /// Обновить данные пациента
+    /// Update patient data
     /// </summary>
-    /// <param name="id">Идентификатор пациента</param>
-    /// <param name="dto">Данные для обновления</param>
-    /// <returns>Обновленные данные пациента</returns>
+    /// <param name="id">Patient ID</param>
+    /// <param name="dto">Update data</param>
+    /// <returns>Updated patient data</returns>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -119,10 +119,10 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     }
 
     /// <summary>
-    /// Удалить пациента
+    /// Delete a patient
     /// </summary>
-    /// <param name="id">Идентификатор пациента</param>
-    /// <returns>Результат операции</returns>
+    /// <param name="id">Patient ID</param>
+    /// <returns>The result of the operation</returns>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

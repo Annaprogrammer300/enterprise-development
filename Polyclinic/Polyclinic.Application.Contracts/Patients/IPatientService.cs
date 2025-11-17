@@ -1,14 +1,14 @@
 ﻿namespace Polyclinic.Application.Contracts.Patients;
 
 /// <summary>
-/// Наследник аппликейшен службы для пациентов
+/// The heir of the patient application service
 /// </summary>
 public interface IPatientService : IApplicationService<PatientDto, PatientCreateUpdateDto, int>
 {
     /// <summary>
-    /// Получает пациента по номеру паспорта
+    /// Receives the patient by passport number
     /// </summary>
-    /// <param name="passportNumber">Номер паспорта</param>
-    /// <returns>DTO пациента</returns>
+    /// <param name="passportNumber">Passport number</param>
+    /// <returns>Patient's DTO</returns>
     public Task<PatientDto?> GetByPassportAsync(string? passportNumber);
 }
