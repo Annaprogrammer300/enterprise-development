@@ -1,60 +1,114 @@
 # Разработка корпоративных приложений
 [Таблица с успеваемостью](https://docs.google.com/spreadsheets/d/1JD6aiOG6r7GrA79oJncjgUHWtfeW4g_YZ9ayNgxb_w0/edit?usp=sharing)
 
-## Лабораторная работа 1: «Классы» - Реализация объектной модели данных и unit-тестов
+## Лабораторная работа 2: «Серверное приложение с Web API и аналитикой»
 
 ## Описание проекта
-Проект представляет собой систему управления данными поликлиники, включающую информацию о пациентах, врачах и записях на прием. Реализована структура классов предметной области и unit-тесты.
+Проект представляет собой серверное приложение для управления данными поликлиники с RESTful Web API. Реализованы CRUD-операции для сущностей пациентов, врачей и записей на прием, а также аналитические запросы из первой лабораторной работы.
 
 ## Структура решения
 
 ### Проект Polyclinic
-**Компоненты:**
-
-#### Перечисления (Enum)
-- `BloodGroup.cs` - группы крови пациента (I, II, III, IV)
-- `Gender.cs` - пол пациента (Male, Female)
-- `RhesusFactor.cs` - резус-фактор пациента (Positive, Negative)
-- `Specializations.cs` - специализации врачей
-
-#### Классы предметной области
-- `Patient.cs` - пациент поликлиники
-- `Doctor.cs` - врач поликлиники  
-- `Appointment.cs` - запись на прием
+- **Сущности предметной области**: `Patient`, `Doctor`, `Appointment`
+- **Перечисления**: `BloodGroup`, `Gender`, `RhesusFactor`, `Specializations`
 
 ### Проект Polyclinic.Tests
 - `PolyclinicTests.cs` - unit-тесты функциональности (5 тестов)
 - `TestDataSeeder.cs` - генератор тестовых данных (10 пациентов, 10 врачей, 11 записей)
 - `TestFixture.cs` - для разделения состояние данных между тестами
 
-## Модели данных
+### Проект Polyclinic.Application.Contracts
+**Интерфейсы сервисов**:
+  - `IApplicationService.cs` - общий интерфейс для CRUD операций
+  - `IAnalyticsService.cs` - интерфейс аналитического сервиса
+  - `IPolyclinicManager.cs` - интерфейс доменного менеджера
 
-### Пациент (Patient)
-- **Id** - индифекатор пациента
-- **PassportNumber** - номер паспорта
-- **FullName** - ФИО пациента
-- **Gender** - пол (перечисление Gender)
-- **BirthDate** - дата рождения
-- **Address** - адрес проживания
-- **BloodGroup** - группа крови (перечисление BloodGroup)
-- **RhesusFactor** - резус-фактор (перечисление RhesusFactor)
-- **Phone** - контактный телефон
+**DTO для пациентов**:
+  - `PatientDto.cs` - DTO для чтения данных пациента
+  - `PatientCreateUpdateDto.cs` - DTO для создания/обновления пациента
+  - `IPatienService.cs` - интерфейс сервиса для пациентов
 
-### Врач (Doctor)
-- **Id** - индифекатор врача
-- **PassportNumber** - номер паспорта
-- **FullName** - ФИО врача
-- **BirthYear** - год рождения
-- **Specialization** - специализация (перечисление Specializations)
-- **Experience** - стаж работы (в годах)
+**DTO для врачей**:
+  - `DoctorDto.cs` - DTO для чтения данных врача
+  - `DoctorCreateUpdateDto.cs` - DTO для создания/обновления врача
+  - `IDoctorService.cs` - интерфейс сервиса для врачей
 
-### Запись на прием (Appointment)
-- **Id** - индифекатор приема
-- **Patient** - пациент 
-- **Doctor** - врач 
-- **DateTime** - дата и время приема
-- **RoomNumber** - номер кабинета
-- **IsRepeat** - повторный прием (true/false)
+**DTO для записей**:
+  - `AppointmentDto.cs` - DTO для чтения данных записи
+  - `AppointmentCreateUpdateDto.cs` - DTO для создания/обновления записи
+  - `IAppointmentService.cs` - интерфейс сервиса записей
+
+### Polyclinic.Application
+**Сервисы приложения**: 
+  - `PatientService` - CRUD операции для пациентов
+  - `DoctorService` - CRUD операции для врачей
+  - `AppointmentService` - CRUD операции для записей
+  - `AnalyticsService` - аналитические запросы
+- `PolyclinicProfile` (AutoMapper)
+
+### Polyclinic.Infrastructure.InMemory 
+**InMemory менеджеры**: 
+  - `PatientInMemoryManager`
+  - `DoctorInMemoryManager` 
+  - `AppointmentInMemoryManager`
+
+**Интерфейс**: `IManager<T, int>` - для доступа к данным
+
+### Polyclinic.Api.Host (Web API слой)
+**Контроллеры**: 
+  - `PatientsController` - CRUD для пациентов
+  - `DoctorsController` - CRUD для врачей  
+  - `AppointmentsController` - CRUD для записей
+  - `AnalyticsController` - аналитические endpoints
+
+**Конфигурация**: `Program.cs`, `appsettings.json`
+
+## Функциональность
+
+### CRUD операции
+
+#### Пациенты (`/api/patients`)
+- `GET /api/patients` - получить всех пациентов
+- `GET /api/patients/{id}` - получить пациента по ID
+- `POST /api/patients` - создать нового пациента
+- `PUT /api/patients/{id}` - обновить пациента
+- `DELETE /api/patients/{id}` - удалить пациента
+
+#### Врачи (`/api/doctors`)
+- `GET /api/doctors` - получить всех врачей
+- `GET /api/doctors/{id}` - получить врача по ID
+- `POST /api/doctors` - создать нового врача
+- `PUT /api/doctors/{id}` - обновить врача
+- `DELETE /api/doctors/{id}` - удалить врача
+
+#### Записи на прием (`/api/appointments`)
+- `GET /api/appointments` - получить все записи
+- `GET /api/appointments/{id}` - получить запись по ID
+- `POST /api/appointments` - создать новую запись
+- `PUT /api/appointments/{id}` - обновить запись
+- `DELETE /api/appointments/{id}` - удалить запись
+
+### Аналитические endpoints (`/api/analytics`)
+
+1. **Врачи с опытом работы**
+   - `GET /api/analytics/doctors/experience/{minExperience}`
+   - Вывод ID врачей со стажем работы не менее указанного количества лет
+
+2. **Пациенты по врачу**
+   - `GET /api/analytics/patients/by-doctor/{doctorId}`
+   - Вывод ФИО пациентов, записанных к указанному врачу (упорядочено по ФИО)
+
+3. **Повторные приемы**
+   - `GET /api/analytics/appointments/repeated-count?lastMonth={date}&today={date}`
+   - Подсчет количества повторных приемов пациентов за указанный период
+
+4. **Пациенты старше возраста с несколькими врачами**
+   - `GET /api/analytics/patients/over-age-with-multiple-doctors?age={age}&date={date}`
+   - Вывод дат рождения пациентов старше указанного возраста, записанных к нескольким врачам
+
+5. **Приемы в кабинете за месяц**
+   - `GET /api/analytics/appointments/in-cabinet/{roomNumber}?currentDate={date}`
+   - Вывод информации о приемах за указанный месяц в выбранном кабинете
 
 ## Unit-тесты
 
