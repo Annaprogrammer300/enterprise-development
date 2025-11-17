@@ -1,0 +1,6 @@
+@Polyclinic.Api.Host_HostAddress = http://localhost:5187
+
+GET {{Polyclinic.Api.Host_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
