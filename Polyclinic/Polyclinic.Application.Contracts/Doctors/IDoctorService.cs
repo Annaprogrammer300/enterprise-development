@@ -1,4 +1,4 @@
-﻿using Polyclinic.Enum;
+﻿using Polyclinic.Domain.Enum;
 
 namespace Polyclinic.Application.Contracts.Doctors;
 

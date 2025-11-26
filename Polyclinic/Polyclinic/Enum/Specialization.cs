@@ -1,4 +1,4 @@
-﻿namespace Polyclinic.Enum;
+﻿namespace Polyclinic.Domain.Enum;
 
 /// <summary>
 /// Medical specialization of a doctor

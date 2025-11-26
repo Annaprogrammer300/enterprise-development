@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Domain;
+﻿using Polyclinic.Domain;
+
+namespace Polyclinic.Tests;
 
 /// <summary>
 /// Test class for Polyclinic application functionality

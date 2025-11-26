@@ -1,4 +1,4 @@
-﻿namespace Polyclinic.Enum;
+﻿namespace Polyclinic.Domain.Enum;
 
 /// <summary>
 /// The patient's blood type

@@ -7,8 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Polyclinic\Polyclinic.csproj" />
-		<ProjectReference Include="..\Polyclinic.Infrastructure.InMemory\Polyclinic.Infrastructure.InMemory.csproj" />
+		<ProjectReference Include="..\Polyclinic\Polyclinic.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

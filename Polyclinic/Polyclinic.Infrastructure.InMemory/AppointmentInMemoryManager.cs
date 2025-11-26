@@ -16,9 +16,9 @@ public class AppointmentInMemoryManager : IManager<Appointment, int>
     /// </summary>
     public AppointmentInMemoryManager()
     {
-        _patients = TestDataSeeder.GetPatients();
-        _doctors = TestDataSeeder.GetDoctors();
-        _appointments = TestDataSeeder.GetAppointments(_patients, _doctors);
+        _patients = DataSeeder.GetPatients();
+        _doctors = DataSeeder.GetDoctors();
+        _appointments = DataSeeder.GetAppointments();
     }
 
     /// <summary>

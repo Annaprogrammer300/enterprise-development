@@ -1,5 +1,5 @@
 using Microsoft.OpenApi.Models;
-using Polyclinic;
+using Polyclinic.Domain;
 using Polyclinic.Application;
 using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Appointments;

@@ -2,6 +2,7 @@
 using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Application.Contracts.Doctors;
 using Polyclinic.Application.Contracts.Appointments;
+using Polyclinic.Domain;
 
 namespace Polyclinic.Application;
 

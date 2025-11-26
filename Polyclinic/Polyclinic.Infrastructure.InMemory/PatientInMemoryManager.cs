@@ -14,7 +14,7 @@ public class PatientInMemoryManager : IManager<Patient, int>
     /// </summary>
     public PatientInMemoryManager()
     {
-        _patients = TestDataSeeder.GetPatients();
+        _patients = DataSeeder.GetPatients();
     }
 
     /// <summary>

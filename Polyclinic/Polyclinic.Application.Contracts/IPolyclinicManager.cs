@@ -1,5 +1,5 @@
 ﻿using Polyclinic.Domain;
-using Polyclinic.Infrastructure.InMemory;
+using Polyclinic.Domain.Abstractions;
 
 namespace Polyclinic.Application.Contracts;
 

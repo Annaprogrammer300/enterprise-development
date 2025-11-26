@@ -2,6 +2,7 @@
 using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Appointments;
 using Polyclinic.Infrastructure.InMemory;
+using Polyclinic.Domain;
 
 namespace Polyclinic.Application.Services;
 

@@ -1,4 +1,4 @@
-﻿namespace Polyclinic;
+﻿namespace Polyclinic.Domain;
 
 /// <summary>
 /// A class that describes a patient's appointment with a doctor

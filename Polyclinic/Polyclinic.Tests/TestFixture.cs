@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Domain;
+﻿using Polyclinic.Domain;
+
+namespace Polyclinic.Tests;
 
 /// <summary>
 /// Test fixture for Polyclinic tests
@@ -25,9 +27,9 @@ public class PolyclinicFixture
     /// </summary>
     public PolyclinicFixture()
     {
-        Patients = TestDataSeeder.GetPatients();
-        Doctors = TestDataSeeder.GetDoctors();
-        Appointments = TestDataSeeder.GetAppointments(Patients, Doctors);
+        Patients = DataSeeder.GetPatients();
+        Doctors = DataSeeder.GetDoctors();
+        Appointments = DataSeeder.GetAppointments();
     }
 
     /// <summary>
