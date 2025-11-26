@@ -6,7 +6,7 @@ namespace Polyclinic.Api.Host.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AppointmentsController(IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int> service, ILogger<AppointmentsController> logger) : ControllerBase
+public class AppointmentsController(IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int> service) : ControllerBase
 {
     /// <summary>
     /// Get all appointment appointments
@@ -14,21 +14,10 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     /// <returns>List of all appointment appointments</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AppointmentDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IEnumerable<AppointmentDto>> GetAll()
     {
-        try
-        {
-            var appointments = service.GetAll();
-            return Ok(appointments);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error getting all appointments");
-            return Problem(
-                title: "Unable to fetch appointments.",
-                statusCode: StatusCodes.Status500InternalServerError);
-        }
+        var appointments = service.GetAll();
+        return Ok(appointments);
     }
 
     /// <summary>
@@ -39,7 +28,6 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Get(int id)
     {
         try
@@ -47,17 +35,9 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
             var appointment = service.Get(id);
             return Ok(appointment);
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Appointment with ID {AppointmentId} not found", id);
-            return NotFound($"Appointment with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error getting appointment with ID {AppointmentId}", id);
-            return Problem(
-                title: "Unable to fetch appointment.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Appointment with id {id} not found");
         }
     }
 
@@ -69,21 +49,15 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpPost]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Create([FromBody] AppointmentCreateUpdateDto dto)
     {
-        try
+        if (!ModelState.IsValid)
         {
-            var createdAppointment = service.Create(dto);
-            return CreatedAtAction(nameof(Get), new { id = createdAppointment.Id }, createdAppointment);
+            return BadRequest(ModelState);
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error creating appointment");
-            return Problem(
-                title: "Unable to create appointment.",
-                statusCode: StatusCodes.Status500InternalServerError);
-        }
+
+        var createdAppointment = service.Create(dto);
+        return CreatedAtAction(nameof(Get), new { id = createdAppointment.Id }, createdAppointment);
     }
 
     /// <summary>
@@ -96,25 +70,21 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Update(int id, [FromBody] AppointmentCreateUpdateDto dto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         try
         {
             var updatedAppointment = service.Update(id, dto);
             return Ok(updatedAppointment);
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Appointment with ID {AppointmentId} not found for update", id);
-            return NotFound($"Appointment with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error updating appointment with ID {AppointmentId}", id);
-            return Problem(
-                title: "Unable to update appointment.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Appointment with id {id} not found");
         }
     }
 
@@ -126,7 +96,6 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Delete(int id)
     {
         try
@@ -134,17 +103,9 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
             service.Delete(id);
             return NoContent();
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Appointment with ID {AppointmentId} not found for deletion", id);
-            return NotFound($"Appointment with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error deleting appointment with ID {AppointmentId}", id);
-            return Problem(
-                title: "Unable to delete appointment.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Appointment with id {id} not found");
         }
     }
 }

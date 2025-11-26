@@ -1,4 +1,6 @@
 ﻿using Polyclinic.Domain;
+using Polyclinic.Domain.Abstractions;
+
 
 namespace Polyclinic.Infrastructure.InMemory;
 
@@ -7,70 +9,51 @@ namespace Polyclinic.Infrastructure.InMemory;
 /// </summary>
 public class AppointmentInMemoryManager : IManager<Appointment, int>
 {
-    private readonly List<Appointment> _appointments;
-    private readonly List<Patient> _patients;
-    private readonly List<Doctor> _doctors;
+    private readonly List<Appointment> _appointments = DataSeeder.GetAppointments();
 
     /// <summary>
-    /// Initializes a new instance of the AppointmentInMemoryManager class with pre-seeded test data including related patients and doctors
+    /// Adds a new Appointment entity to the in-memory collection.
     /// </summary>
-    public AppointmentInMemoryManager()
-    {
-        _patients = DataSeeder.GetPatients();
-        _doctors = DataSeeder.GetDoctors();
-        _appointments = DataSeeder.GetAppointments();
-    }
+    /// <param name="entity">The Appointment entity to add.</param>
+    public void Create(Appointment entity) => _appointments.Add(entity);
 
     /// <summary>
-    /// Creates a new appointment entity and adds it to the in-memory collection
+    /// Retrieves an Appointment entity by its unique identifier.
     /// </summary>
-    /// <param name="entity">The appointment entity to create</param>
-    public void Create(Appointment entity)
-    {
-        _appointments.Add(entity);
-    }
+    /// <param name="entityId">The unique identifier of the Appointment.</param>
+    /// <returns>The Appointment entity if found; otherwise, null.</returns>
+    public Appointment? Read(int entityId) => _appointments.FirstOrDefault(a => a.Id == entityId);
 
     /// <summary>
-    /// Retrieves an appointment entity by its unique identifier
+    /// Retrieves all Appointment entities from the in-memory collection.
     /// </summary>
-    /// <param name="entityId">The unique identifier of the appointment</param>
-    /// <returns>The appointment entity if found, otherwise null</returns>
-    public Appointment Read(int entityId)
-    {
-        return _appointments.FirstOrDefault(a => a.Id == entityId);
-    }
+    /// <returns>A list of all Appointment entities.</returns>
+    public List<Appointment> ReadAll() => _appointments;
 
     /// <summary>
-    /// Retrieves all appointment entities from the in-memory collection
+    /// Updates an existing Appointment entity in the in-memory collection.
     /// </summary>
-    /// <returns>A list of all appointment entities</returns>
-    public List<Appointment> ReadAll()
-    {
-        return _appointments;
-    }
-
-    /// <summary>
-    /// Updates an existing appointment entity in the in-memory collection
-    /// </summary>
-    /// <param name="entity">The appointment entity with updated data</param>
+    /// <param name="entity">The Appointment entity with updated information.</param>
     public void Update(Appointment entity)
     {
-        var existingAppointment = Read(entity.Id);
-        if (existingAppointment != null)
-        {
-            _appointments.Remove(existingAppointment);
-            _appointments.Add(entity);
-        }
+        var index = _appointments.FindIndex(a => a.Id == entity.Id);
+        if (index != -1) _appointments[index] = entity;
     }
 
     /// <summary>
-    /// Deletes an appointment entity from the in-memory collection by its identifier
+    /// Removes an Appointment entity from the in-memory collection by its identifier.
     /// </summary>
-    /// <param name="entityId">The unique identifier of the appointment to delete</param>
+    /// <param name="entityId">The unique identifier of the Appointment to remove.</param>
     public void Delete(int entityId)
     {
-        var appointment = Read(entityId);
-        if (appointment != null)
-            _appointments.Remove(appointment);
+        var item = Read(entityId);
+        if (item != null) _appointments.Remove(item);
     }
+
+    /// <summary>
+    /// Checks whether an Appointment entity with the specified identifier exists in the collection.
+    /// </summary>
+    /// <param name="entityId">The unique identifier to check.</param>
+    /// <returns>true if an Appointment with the specified ID exists; otherwise, false.</returns>
+    public bool Exists(int entityId) => _appointments.Any(a => a.Id == entityId);
 }

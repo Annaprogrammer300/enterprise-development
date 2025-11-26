@@ -6,7 +6,7 @@ namespace Polyclinic.Api.Host.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AnalyticsController(IAnalyticsService analyticsService, ILogger<AnalyticsController> logger) : ControllerBase
+public class AnalyticsController(IAnalyticsService analyticsService) : ControllerBase
 {
     /// <summary>
     /// Get a list of doctors with at least the specified number of years of experience
@@ -16,36 +16,20 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     [HttpGet("doctors/experience/{minExperience}")]
     public ActionResult<List<int>> GetDoctorsWithExperienceAtLeast(int minExperience)
     {
-        try
-        {
-            var result = analyticsService.GetDoctorsWithExperienceAtLeast(minExperience);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error retrieving doctors with experience at least {MinExperience} years", minExperience);
-            return BadRequest($"An error occurred while processing the request: {ex.Message}");
-        }
+        var result = analyticsService.GetDoctorsWithExperienceAtLeast(minExperience);
+        return Ok(result);
     }
 
     /// <summary>
     /// Get a list of patients by doctor ID
     /// </summary>
-    /// <param name="DoctorID">Doctor's ID</param>
+    /// <param name="doctorId">Doctor's ID</param>
     /// <returns>List of patients</returns>
     [HttpGet("patients/by-doctor/{doctorId}")]
     public ActionResult<List<string>> GetPatientsByDoctor(int doctorId)
     {
-        try
-        {
-            var result = analyticsService.GetPatientsByDoctor(doctorId);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error retrieving patients for doctor {DoctorId}", doctorId);
-            return BadRequest($"An error occurred while processing the request: {ex.Message}");
-        }
+        var result = analyticsService.GetPatientsByDoctor(doctorId);
+        return Ok(result);
     }
 
     /// <summary>
@@ -57,16 +41,8 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     [HttpGet("appointments/repeated-count")]
     public ActionResult<int> GetRepeatedAppointmentsCount([FromQuery] DateTime lastMonth, [FromQuery] DateTime today)
     {
-        try
-        {
-            var result = analyticsService.CountRepeatedAppointmentsLastMonth(lastMonth, today);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error counting repeated appointments from {LastMonth} to {Today}", lastMonth, today);
-            return BadRequest($"An error occurred while processing the request: {ex.Message}");
-        }
+        var result = analyticsService.CountRepeatedAppointmentsLastMonth(lastMonth, today);
+        return Ok(result);
     }
 
     /// <summary>
@@ -78,16 +54,8 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     [HttpGet("patients/over-age-with-multiple-doctors")]
     public ActionResult<List<DateTime>> GetPatientsOverAgeWithMultipleDoctors([FromQuery] int age, [FromQuery] DateTime date)
     {
-        try
-        {
-            var result = analyticsService.GetPatientsOverAgeWithMultipleDoctors(age, date);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error retrieving patients over age {Age} with multiple doctors as of {Date}", age, date);
-            return BadRequest($"An error occurred while processing the request: {ex.Message}");
-        }
+        var result = analyticsService.GetPatientsOverAgeWithMultipleDoctors(age, date);
+        return Ok(result);
     }
 
     /// <summary>
@@ -99,15 +67,7 @@ public class AnalyticsController(IAnalyticsService analyticsService, ILogger<Ana
     [HttpGet("appointments/in-cabinet/{roomNumber}")]
     public ActionResult<List<AppointmentDto>> GetAppointmentsInCabinetForCurrentMonth(int roomNumber, [FromQuery] DateTime currentDate)
     {
-        try
-        {
-            var result = analyticsService.GetAppointmentsInCabinetForCurrentMonth(roomNumber, currentDate);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error retrieving appointments in cabinet {RoomNumber} for month of {CurrentDate}", roomNumber, currentDate);
-            return BadRequest($"An error occurred while processing the request: {ex.Message}");
-        }
+        var result = analyticsService.GetAppointmentsInCabinetForCurrentMonth(roomNumber, currentDate);
+        return Ok(result);
     }
 }

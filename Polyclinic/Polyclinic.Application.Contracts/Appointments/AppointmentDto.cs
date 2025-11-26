@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Application.Contracts.Appointments;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Polyclinic.Application.Contracts.Appointments;
 
 /// <summary>
 /// DTO for GET requests to appointment appointments
@@ -13,13 +15,13 @@
 /// <param name="roomNumber">Cabinet number</param>
 /// <param name="IsRepeat">Indication of repeat admission</param>
 public record AppointmentDto(
-    int Id,
-    int PatientId,
-    string PatientFullName,
-    int DoctorId,
-    string DoctorFullName,
-    string DoctorSpecialization,
-    DateTime DateTime,
-    int RoomNumber,
-    bool IsRepeat
+    [Required] int Id,
+    [Required] int PatientId,
+    [Required][StringLength(100)] string PatientFullName,
+    [Required] int DoctorId,
+    [Required][StringLength(100)] string DoctorFullName,
+    [Required][StringLength(50)] string DoctorSpecialization,
+    [Required] DateTime DateTime,
+    [Required][Range(1, 1000)] int RoomNumber,
+    [Required] bool IsRepeat
 );

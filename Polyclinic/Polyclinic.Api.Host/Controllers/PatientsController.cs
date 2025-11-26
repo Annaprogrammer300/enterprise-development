@@ -6,7 +6,7 @@ namespace Polyclinic.Api.Host.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PatientsController(IApplicationService<PatientDto, PatientCreateUpdateDto, int> service, ILogger<PatientsController> logger) : ControllerBase
+public class PatientsController(IApplicationService<PatientDto, PatientCreateUpdateDto, int> service) : ControllerBase
 {
     /// <summary>
     /// Get all patients
@@ -14,21 +14,10 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     /// <returns>List of all patients</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PatientDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IEnumerable<PatientDto>> GetAll()
     {
-        try
-        {
-            var patients = service.GetAll();
-            return Ok(patients);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error getting all patients");
-            return Problem(
-                title: "Unable to fetch patients.",
-                statusCode: StatusCodes.Status500InternalServerError);
-        }
+        var patients = service.GetAll();
+        return Ok(patients);
     }
 
     /// <summary>
@@ -39,7 +28,6 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Get(int id)
     {
         try
@@ -47,17 +35,9 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
             var patient = service.Get(id);
             return Ok(patient);
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Patient with ID {PatientId} not found", id);
-            return NotFound($"Patient with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error getting patient with ID {PatientId}", id);
-            return Problem(
-                title: "Unable to fetch patient.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Patient with id {id} not found");
         }
     }
 
@@ -69,21 +49,15 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpPost]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Create([FromBody] PatientCreateUpdateDto dto)
     {
-        try
+        if (!ModelState.IsValid)
         {
-            var createdPatient = service.Create(dto);
-            return CreatedAtAction(nameof(Get), new { id = createdPatient.Id }, createdPatient);
+            return BadRequest(ModelState);
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error creating patient");
-            return Problem(
-                title: "Unable to create patient.",
-                statusCode: StatusCodes.Status500InternalServerError);
-        }
+
+        var createdPatient = service.Create(dto);
+        return CreatedAtAction(nameof(Get), new { id = createdPatient.Id }, createdPatient);
     }
 
     /// <summary>
@@ -96,25 +70,21 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Update(int id, [FromBody] PatientCreateUpdateDto dto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         try
         {
             var updatedPatient = service.Update(id, dto);
             return Ok(updatedPatient);
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Patient with ID {PatientId} not found for update", id);
-            return NotFound($"Patient with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error updating patient with ID {PatientId}", id);
-            return Problem(
-                title: "Unable to update patient.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Patient with id {id} not found");
         }
     }
 
@@ -126,7 +96,6 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Delete(int id)
     {
         try
@@ -134,17 +103,9 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
             service.Delete(id);
             return NoContent();
         }
-        catch (ArgumentException ex)
+        catch (KeyNotFoundException)
         {
-            logger.LogWarning(ex, "Patient with ID {PatientId} not found for deletion", id);
-            return NotFound($"Patient with ID {id} not found");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error deleting patient with ID {PatientId}", id);
-            return Problem(
-                title: "Unable to delete patient.",
-                statusCode: StatusCodes.Status500InternalServerError);
+            return NotFound($"Patient with id {id} not found");
         }
     }
 }

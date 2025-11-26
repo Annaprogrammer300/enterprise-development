@@ -1,4 +1,5 @@
 ﻿using Polyclinic.Domain;
+using Polyclinic.Domain.Abstractions;
 
 namespace Polyclinic.Infrastructure.InMemory;
 
@@ -7,66 +8,51 @@ namespace Polyclinic.Infrastructure.InMemory;
 /// </summary>
 public class DoctorInMemoryManager : IManager<Doctor, int>
 {
-    private readonly List<Doctor> _doctors;
+    private readonly List<Doctor> _doctors = DataSeeder.GetDoctors();
 
     /// <summary>
-    /// Initializes a new instance of the DoctorInMemoryManager class with pre-seeded test data
+    /// Adds a new Doctor entity to the in-memory collection.
     /// </summary>
-    public DoctorInMemoryManager()
-    {
-        _doctors = DataSeeder.GetDoctors();
-    }
-
+    /// <param name="entity">The Doctor entity to add.</param>
+    public void Create(Doctor entity) => _doctors.Add(entity);
+    
     /// <summary>
-    /// Creates a new doctor entity and adds it to the in-memory collection
+    /// Retrieves a Doctor entity by its unique identifier.
     /// </summary>
-    /// <param name="entity">The doctor entity to create</param>
-    public void Create(Doctor entity)
-    {
-        _doctors.Add(entity);
-    }
-
+    /// <param name="entityId">The unique identifier of the Doctor.</param>
+    /// <returns>The Doctor entity if found; otherwise, null.</returns>
+    public Doctor? Read(int entityId) => _doctors.FirstOrDefault(d => d.Id == entityId);
+    
     /// <summary>
-    /// Retrieves a doctor entity by its unique identifier
+    /// Retrieves all Doctor entities from the in-memory collection.
     /// </summary>
-    /// <param name="entityId">The unique identifier of the doctor</param>
-    /// <returns>The doctor entity if found, otherwise null</returns>
-    public Doctor Read(int entityId)
-    {
-        return _doctors.FirstOrDefault(d => d.Id == entityId);
-    }
-
+    /// <returns>A list of all Doctor entities.</returns>
+    public List<Doctor> ReadAll() => _doctors;
+    
     /// <summary>
-    /// Retrieves all doctor entities from the in-memory collection
+    /// Updates an existing Doctor entity in the in-memory collection.
     /// </summary>
-    /// <returns>A list of all doctor entities</returns>
-    public List<Doctor> ReadAll()
-    {
-        return _doctors;
-    }
-
-    /// <summary>
-    /// Updates an existing doctor entity in the in-memory collection
-    /// </summary>
-    /// <param name="entity">The doctor entity with updated data</param>
+    /// <param name="entity">The Doctor entity with updated information.</param>
     public void Update(Doctor entity)
     {
-        var existingDoctor = Read(entity.Id);
-        if (existingDoctor != null)
-        {
-            _doctors.Remove(existingDoctor);
-            _doctors.Add(entity);
-        }
+        var index = _doctors.FindIndex(d => d.Id == entity.Id);
+        if (index != -1) _doctors[index] = entity;
     }
 
     /// <summary>
-    /// Deletes a doctor entity from the in-memory collection by its identifier
+    /// Removes a Doctor entity from the in-memory collection by its identifier.
     /// </summary>
-    /// <param name="entityId">The unique identifier of the doctor to delete</param>
+    /// <param name="entityId">The unique identifier of the Doctor to remove.</param>
     public void Delete(int entityId)
     {
-        var doctor = Read(entityId);
-        if (doctor != null)
-            _doctors.Remove(doctor);
+        var item = Read(entityId);
+        if (item != null) _doctors.Remove(item);
     }
+
+    /// <summary>
+    /// Checks whether a Doctor entity with the specified identifier exists in the collection.
+    /// </summary>
+    /// <param name="entityId">The unique identifier to check.</param>
+    /// <returns>true if a Doctor with the specified ID exists; otherwise, false.</returns>
+    public bool Exists(int entityId) => _doctors.Any(d => d.Id == entityId);
 }

@@ -1,7 +1,7 @@
 ﻿using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;
 
-namespace Polyclinic.Application.Contracts;
+namespace Polyclinic.Application.Services;
 
 /// <summary>
 /// Domain service for implementing business logic related to the clinic

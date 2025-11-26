@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Polyclinic.Application.Contracts;
+using Polyclinic.Application.Contracts.Appointments;
 using Polyclinic.Application.Contracts.Doctors;
-using Polyclinic.Infrastructure.InMemory;
 using Polyclinic.Domain;
+using Polyclinic.Domain.Abstractions;
 
 namespace Polyclinic.Application.Services;
 
@@ -43,8 +44,8 @@ public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApp
     /// <returns>DoctorDto representing the found doctor</returns>
     public DoctorDto Get(int dtoId)
     {
-        var doctor = manager.Read(dtoId);
-        return mapper.Map<DoctorDto>(doctor);
+        var entity = manager.Read(dtoId);
+        return entity == null ? throw new KeyNotFoundException("Entity not found") : mapper.Map<DoctorDto>(entity);
     }
 
     /// <summary>
@@ -66,10 +67,14 @@ public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApp
     /// <exception cref="ArgumentException">Thrown when doctor with specified ID is not found</exception>
     public DoctorDto Update(int dtoId, DoctorCreateUpdateDto dto)
     {
-        _ = manager.Read(dtoId) ?? throw new ArgumentException("Doctor not found");
-        var updatedDoctor = mapper.Map<Doctor>(dto);
-        updatedDoctor.Id = dtoId;
-        manager.Update(updatedDoctor);
-        return mapper.Map<DoctorDto>(updatedDoctor);
+        if (!manager.Exists(dtoId))
+        {
+            throw new KeyNotFoundException("Entity not found");
+        }
+
+        var entity = mapper.Map<Doctor>(dto);
+        entity.Id = dtoId;
+        manager.Update(entity);
+        return mapper.Map<DoctorDto>(entity);
     }
 }
