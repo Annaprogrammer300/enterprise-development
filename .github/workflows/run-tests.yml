@@ -26,4 +26,4 @@ jobs:
       run: dotnet build Polyclinic/Polyclinic.sln --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test Polyclinic/Polyclinic.Tests/Polyclinic.Domain.csproj --no-build --configuration Release
+      run: dotnet test Polyclinic/Polyclinic.Tests/Polyclinic.Tests.csproj --no-build --configuration Release
