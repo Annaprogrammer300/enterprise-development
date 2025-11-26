@@ -10,8 +10,11 @@ namespace Polyclinic.Application.Services;
 /// Service for CRUD operations on appointment appointments
 /// </summary>
 /// <param name="manager">Record manager</param>
+/// <param name="patientManager">Patient manager</param>
+/// <param name="doctorManager">Doctor manager</param>
 /// <param name="mapper">Mapping profile</param>
-public class AppointmentService(IManager<Appointment, int> manager, IMapper mapper) : IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int>
+public class AppointmentService(IManager<Appointment, int> manager, IManager<Patient, int> patientManager,
+    IManager<Doctor, int> doctorManager, IMapper mapper) : IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int>
 {
     /// <summary>
     /// Creates a new appointment entity from the provided DTO
@@ -23,6 +26,8 @@ public class AppointmentService(IManager<Appointment, int> manager, IMapper mapp
         var newAppointment = mapper.Map<Appointment>(dto);
         var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(a => a.Id) : 0;
         newAppointment.Id = lastId + 1;
+        newAppointment.Patient = patientManager.Read(dto.PatientId);
+        newAppointment.Doctor = doctorManager.Read(dto.DoctorId);
         manager.Create(newAppointment);
         return mapper.Map<AppointmentDto>(newAppointment);
     }

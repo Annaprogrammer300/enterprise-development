@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Polyclinic.Application.Contracts;
-using Polyclinic.Application.Contracts.Appointments;
 using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;

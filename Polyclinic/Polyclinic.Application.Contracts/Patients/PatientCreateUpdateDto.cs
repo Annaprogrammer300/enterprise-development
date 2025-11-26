@@ -38,7 +38,7 @@ public record PatientCreateUpdateDto(
     string BloodGroup,
 
     [Required(ErrorMessage = "Rhesus factor is required")]
-    [StringLength(5, ErrorMessage = "Rhesus factor cannot exceed 5 characters")]
+    [StringLength(10, ErrorMessage = "Rhesus factor cannot exceed 5 characters")]
     string RhesusFactor,
 
     [Required(ErrorMessage = "Phone is required")]

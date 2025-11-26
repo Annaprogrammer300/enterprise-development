@@ -1,6 +1,6 @@
-﻿using Polyclinic.Application.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Doctors;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Polyclinic.Api.Host.Controllers;
 

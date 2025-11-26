@@ -1,12 +1,12 @@
 using Microsoft.OpenApi.Models;
-using Polyclinic.Domain;
-using Polyclinic.Domain.Abstractions;
 using Polyclinic.Application;
 using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Appointments;
 using Polyclinic.Application.Contracts.Doctors;
 using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Application.Services;
+using Polyclinic.Domain;
+using Polyclinic.Domain.Abstractions;
 using Polyclinic.Infrastructure.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);

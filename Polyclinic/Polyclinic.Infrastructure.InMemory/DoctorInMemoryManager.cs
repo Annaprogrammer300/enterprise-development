@@ -15,20 +15,20 @@ public class DoctorInMemoryManager : IManager<Doctor, int>
     /// </summary>
     /// <param name="entity">The Doctor entity to add.</param>
     public void Create(Doctor entity) => _doctors.Add(entity);
-    
+
     /// <summary>
     /// Retrieves a Doctor entity by its unique identifier.
     /// </summary>
     /// <param name="entityId">The unique identifier of the Doctor.</param>
     /// <returns>The Doctor entity if found; otherwise, null.</returns>
     public Doctor? Read(int entityId) => _doctors.FirstOrDefault(d => d.Id == entityId);
-    
+
     /// <summary>
     /// Retrieves all Doctor entities from the in-memory collection.
     /// </summary>
     /// <returns>A list of all Doctor entities.</returns>
     public List<Doctor> ReadAll() => _doctors;
-    
+
     /// <summary>
     /// Updates an existing Doctor entity in the in-memory collection.
     /// </summary>

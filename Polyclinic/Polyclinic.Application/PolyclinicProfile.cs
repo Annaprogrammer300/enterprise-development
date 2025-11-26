@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Polyclinic.Application.Contracts.Patients;
-using Polyclinic.Application.Contracts.Doctors;
 using Polyclinic.Application.Contracts.Appointments;
+using Polyclinic.Application.Contracts.Doctors;
+using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Domain;
 
 namespace Polyclinic.Application;
@@ -29,6 +29,9 @@ public class PolyclinicProfile : Profile
             .ForMember(dest => dest.PatientFullName, opt => opt.MapFrom(src => src.Patient.FullName))
             .ForMember(dest => dest.DoctorFullName, opt => opt.MapFrom(src => src.Doctor.FullName))
             .ForMember(dest => dest.DoctorSpecialization, opt => opt.MapFrom(src => src.Doctor.Specialization.ToString()));
-        CreateMap<AppointmentCreateUpdateDto, Appointment>();
+        CreateMap<AppointmentCreateUpdateDto, Appointment>()
+            .ForMember(dest => dest.Patient, opt => opt.Ignore())
+            .ForMember(dest => dest.Doctor, opt => opt.Ignore());
+
     }
 }

@@ -13,7 +13,7 @@ namespace Polyclinic.Application.Contracts.Appointments;
 public record AppointmentCreateUpdateDto(
     [Required(ErrorMessage = "PatientId is required")] int PatientId,
     [Required(ErrorMessage = "DoctorId is required")] int DoctorId,
-    [Required(ErrorMessage = "DateTime is required")] DateTime DateTime, 
-    [Required] [Range(1, 1000, ErrorMessage = "Room number must be between 1 and 1000")] int RoomNumber, 
-    [Required] bool IsRepeat  
+    [Required(ErrorMessage = "DateTime is required")] DateTime DateTime,
+    [Required][Range(1, 1000, ErrorMessage = "Room number must be between 1 and 1000")] int RoomNumber,
+    [Required] bool IsRepeat
 );
