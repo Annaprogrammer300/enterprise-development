@@ -1,4 +1,6 @@
 ﻿using Polyclinic.Application.Contracts.Appointments;
+using Polyclinic.Application.Contracts.Doctors;
+using Polyclinic.Application.Contracts.Patients;
 
 namespace Polyclinic.Application.Contracts;
 
@@ -12,14 +14,14 @@ public interface IAnalyticsService
     /// </summary>
     /// <param name="minExperience">Minimum work experience</param>
     /// <returns></returns>
-    public List<int> GetDoctorsWithExperienceAtLeast(int minExperience);
+    public List<DoctorDto> GetDoctorsWithExperienceAtLeast(int minExperience);
 
     /// <summary>
     /// Receiving patients by the specified doctor
     /// </summary>
     /// <param name="DoctorID">Doctor's ID</param>
     /// <returns></returns>
-    public List<string> GetPatientsByDoctor(int doctorId);
+    public List<PatientDto> GetPatientsByDoctor(int doctorId);
 
     /// <summary>
     /// Counting repeat admissions over the past month
@@ -35,7 +37,7 @@ public interface IAnalyticsService
     /// <param name="age">Minimum age</param>
     /// <param name="date">Current date for age calculation</param>
     /// <returns></returns>
-    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date);
+    public List<PatientDto> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date);
 
     /// <summary>
     /// Receiving appointments in the specified office for the current month

@@ -19,12 +19,11 @@ public class PolyclinicManager(
     /// </summary>
     /// <param name="minExperience">Minimum years of experience required</param>
     /// <returns>Sorted list of doctor IDs meeting the experience criteria</returns>
-    public List<int> GetDoctorsWithExperienceAtLeast(int minExperience)
+    public List<Doctor> GetDoctorsWithExperienceAtLeast(int minExperience)
     {
         return [.. doctors.ReadAll()
             .Where(d => d.Experience >= minExperience)
-            .Select(d => d.Id)
-            .Order()];
+            .OrderBy(d => d.Id)];
     }
 
     /// <summary>
@@ -32,12 +31,13 @@ public class PolyclinicManager(
     /// </summary>
     /// <param name="doctorId">The unique identifier of the doctor</param>
     /// <returns>Alphabetically sorted list of patient full names</returns>
-    public List<string> GetPatientsByDoctor(int doctorId)
+    public List<Patient> GetPatientsByDoctor(int doctorId)
     {
         return [.. appointments.ReadAll()
             .Where(a => a.Doctor.Id == doctorId)
-            .Select(a => a.Patient.FullName)
-            .OrderBy(name => name)];
+            .Select(a => a.Patient)
+            .Distinct()
+            .OrderBy(p => p.FullName)];
     }
 
     /// <summary>
@@ -58,16 +58,37 @@ public class PolyclinicManager(
     /// <param name="age">Minimum age of patients</param>
     /// <param name="date">Reference date for age calculation</param>
     /// <returns>Sorted list of birth dates meeting the criteria</returns>
-    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date)
+    public List<Patient> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date)
     {
-        var cutoffDate = date.AddYears(-age);
-        return [.. appointments.ReadAll()
+        if (age < 0 || age > 150)
+        {
+            return [];
+        }
+
+        if (date.Year < 1900 || date.Year > 2100)
+        {
+            return [];
+        }
+
+        try
+        {
+            var cutoffDate = date.AddYears(-age);
+            if (cutoffDate.Year < 1900)
+            {
+                return [];
+            }
+
+            return [.. appointments.ReadAll()
             .GroupBy(a => a.Patient)
             .Where(g => g.Select(a => a.Doctor).Distinct().Count() > 1)
             .Select(g => g.Key)
             .Where(p => p.BirthDate <= cutoffDate)
-            .Select(p => p.BirthDate)
-            .OrderBy(birthDate => birthDate)];
+            .OrderBy(p => p.BirthDate)];
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            return [];
+        }
     }
 
     /// <summary>

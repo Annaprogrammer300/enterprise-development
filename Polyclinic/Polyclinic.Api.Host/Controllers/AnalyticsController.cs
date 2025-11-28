@@ -16,8 +16,15 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     [HttpGet("doctors/experience/{minExperience}")]
     public ActionResult<List<int>> GetDoctorsWithExperienceAtLeast(int minExperience)
     {
-        var result = analyticsService.GetDoctorsWithExperienceAtLeast(minExperience);
-        return Ok(result);
+        try
+        {
+            var result = analyticsService.GetDoctorsWithExperienceAtLeast(minExperience);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving doctors with experience: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -28,8 +35,15 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     [HttpGet("patients/by-doctor/{doctorId}")]
     public ActionResult<List<string>> GetPatientsByDoctor(int doctorId)
     {
-        var result = analyticsService.GetPatientsByDoctor(doctorId);
-        return Ok(result);
+        try
+        {
+            var result = analyticsService.GetPatientsByDoctor(doctorId);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving patients by doctor: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -41,8 +55,15 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     [HttpGet("appointments/repeated-count")]
     public ActionResult<int> GetRepeatedAppointmentsCount([FromQuery] DateTime lastMonth, [FromQuery] DateTime today)
     {
-        var result = analyticsService.CountRepeatedAppointmentsLastMonth(lastMonth, today);
-        return Ok(result);
+        try
+        {
+            var result = analyticsService.CountRepeatedAppointmentsLastMonth(lastMonth, today);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error counting repeated appointments: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -54,8 +75,15 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     [HttpGet("patients/over-age-with-multiple-doctors")]
     public ActionResult<List<DateTime>> GetPatientsOverAgeWithMultipleDoctors([FromQuery] int age, [FromQuery] DateTime date)
     {
-        var result = analyticsService.GetPatientsOverAgeWithMultipleDoctors(age, date);
-        return Ok(result);
+        try
+        {
+            var result = analyticsService.GetPatientsOverAgeWithMultipleDoctors(age, date);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving patients over age: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -67,7 +95,14 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     [HttpGet("appointments/in-cabinet/{roomNumber}")]
     public ActionResult<List<AppointmentDto>> GetAppointmentsInCabinetForCurrentMonth(int roomNumber, [FromQuery] DateTime currentDate)
     {
-        var result = analyticsService.GetAppointmentsInCabinetForCurrentMonth(roomNumber, currentDate);
-        return Ok(result);
+        try
+        {
+            var result = analyticsService.GetAppointmentsInCabinetForCurrentMonth(roomNumber, currentDate);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving appointments in cabinet: {ex.Message}");
+        }
     }
 }

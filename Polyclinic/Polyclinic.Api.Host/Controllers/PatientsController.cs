@@ -14,10 +14,18 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     /// <returns>List of all patients</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PatientDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IEnumerable<PatientDto>> GetAll()
     {
-        var patients = service.GetAll();
-        return Ok(patients);
+        try
+        {
+            var patients = service.GetAll();
+            return Ok(patients);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving patients: {ex.Message}");
+        }
     }
 
     /// <summary>

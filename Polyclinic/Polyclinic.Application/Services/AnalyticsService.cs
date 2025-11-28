@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Polyclinic.Application.Contracts;
 using Polyclinic.Application.Contracts.Appointments;
+using Polyclinic.Application.Contracts.Doctors;
+using Polyclinic.Application.Contracts.Patients;
 
 namespace Polyclinic.Application.Services;
 
@@ -16,16 +18,16 @@ public class AnalyticsService(PolyclinicManager polyclinicManager, IMapper mappe
     /// </summary>
     /// <param name="minExperience">Minimum years of experience required</param>
     /// <returns>Sorted list of doctor IDs meeting the experience criteria</returns>
-    public List<int> GetDoctorsWithExperienceAtLeast(int minExperience) =>
-        polyclinicManager.GetDoctorsWithExperienceAtLeast(minExperience);
+    public List<DoctorDto> GetDoctorsWithExperienceAtLeast(int minExperience) =>
+        mapper.Map<List<DoctorDto>>(polyclinicManager.GetDoctorsWithExperienceAtLeast(minExperience));
 
     /// <summary>
     /// Retrieves patient names associated with a specific doctor
     /// </summary>
     /// <param name="doctorId">The unique identifier of the doctor</param>
     /// <returns>Alphabetically sorted list of patient full names</returns>
-    public List<string> GetPatientsByDoctor(int doctorId) =>
-        polyclinicManager.GetPatientsByDoctor(doctorId);
+    public List<PatientDto> GetPatientsByDoctor(int doctorId) =>
+        mapper.Map<List<PatientDto>>(polyclinicManager.GetPatientsByDoctor(doctorId));
 
     /// <summary>
     /// Counts the number of repeated appointments within the specified date range
@@ -42,8 +44,8 @@ public class AnalyticsService(PolyclinicManager polyclinicManager, IMapper mappe
     /// <param name="age">Minimum age of patients</param>
     /// <param name="date">Reference date for age calculation</param>
     /// <returns>Sorted list of birth dates meeting the criteria</returns>
-    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date) =>
-        polyclinicManager.GetPatientsOverAgeWithMultipleDoctors(age, date);
+    public List<PatientDto> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date) =>
+       mapper.Map<List<PatientDto>>(polyclinicManager.GetPatientsOverAgeWithMultipleDoctors(age, date));
 
     /// <summary>
     /// Retrieves appointments in a specific room for the current month and maps them to DTOs

@@ -19,8 +19,8 @@ public interface IManager<TEntity, TKey>
     /// Getting an entity by ID
     /// </summary>
     /// <param name="entityId">Entity ID</param>
-    /// <returns>Entity</returns>
-    public TEntity Read(TKey entityId);
+    /// <returns>Entity if found; otherwise, null</returns>
+    public TEntity? Read(TKey entityId);
 
     /// <summary>
     /// Getting the entire list of entities

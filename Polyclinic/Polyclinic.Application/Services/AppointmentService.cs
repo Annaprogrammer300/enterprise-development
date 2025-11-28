@@ -26,8 +26,14 @@ public class AppointmentService(IManager<Appointment, int> manager, IManager<Pat
         var newAppointment = mapper.Map<Appointment>(dto);
         var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(a => a.Id) : 0;
         newAppointment.Id = lastId + 1;
-        newAppointment.Patient = patientManager.Read(dto.PatientId);
-        newAppointment.Doctor = doctorManager.Read(dto.DoctorId);
+        var patient = patientManager.Read(dto.PatientId);
+        var doctor = doctorManager.Read(dto.DoctorId);
+        if (patient == null)
+            throw new ArgumentException($"Patient with id {dto.PatientId} not found");
+        if (doctor == null)
+            throw new ArgumentException($"Doctor with id {dto.DoctorId} not found");
+        newAppointment.Patient = patient;
+        newAppointment.Doctor = doctor;
         manager.Create(newAppointment);
         return mapper.Map<AppointmentDto>(newAppointment);
     }
@@ -71,14 +77,19 @@ public class AppointmentService(IManager<Appointment, int> manager, IManager<Pat
     /// <exception cref="ArgumentException">Thrown when appointment with specified ID is not found</exception>
     public AppointmentDto Update(int dtoId, AppointmentCreateUpdateDto dto)
     {
-        if (!manager.Exists(dtoId))
-        {
-            throw new KeyNotFoundException("Entity not found");
-        }
+        var existingAppointment = manager.Read(dtoId) ?? throw new KeyNotFoundException("Entity not found");
+        var patient = patientManager.Read(dto.PatientId);
+        var doctor = doctorManager.Read(dto.DoctorId);
 
-        var entity = mapper.Map<Appointment>(dto);
-        entity.Id = dtoId;
-        manager.Update(entity);
-        return mapper.Map<AppointmentDto>(entity);
+        if (patient == null)
+            throw new KeyNotFoundException($"Patient with id {dto.PatientId} not found");
+        if (doctor == null)
+            throw new KeyNotFoundException($"Doctor with id {dto.DoctorId} not found");
+
+        mapper.Map(dto, existingAppointment);
+        existingAppointment.Patient = patient;
+        existingAppointment.Doctor = doctor;
+        manager.Update(existingAppointment);
+        return mapper.Map<AppointmentDto>(existingAppointment);
     }
 }

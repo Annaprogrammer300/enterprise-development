@@ -26,12 +26,15 @@ public class PolyclinicProfile : Profile
 
         // Appointment mappings
         CreateMap<Appointment, AppointmentDto>()
+            .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Patient.Id))
             .ForMember(dest => dest.PatientFullName, opt => opt.MapFrom(src => src.Patient.FullName))
+            .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.Doctor.Id))
             .ForMember(dest => dest.DoctorFullName, opt => opt.MapFrom(src => src.Doctor.FullName))
             .ForMember(dest => dest.DoctorSpecialization, opt => opt.MapFrom(src => src.Doctor.Specialization.ToString()));
         CreateMap<AppointmentCreateUpdateDto, Appointment>()
             .ForMember(dest => dest.Patient, opt => opt.Ignore())
-            .ForMember(dest => dest.Doctor, opt => opt.Ignore());
+            .ForMember(dest => dest.Doctor, opt => opt.Ignore())
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
     }
 }

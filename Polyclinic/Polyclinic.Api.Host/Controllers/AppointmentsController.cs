@@ -14,10 +14,18 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     /// <returns>List of all appointment appointments</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AppointmentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IEnumerable<AppointmentDto>> GetAll()
     {
-        var appointments = service.GetAll();
-        return Ok(appointments);
+        try
+        {
+            var appointments = service.GetAll();
+            return Ok(appointments);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving appointments: {ex.Message}");
+        }
     }
 
     /// <summary>
