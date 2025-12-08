@@ -36,6 +36,8 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Get(int id)
     {
         try
@@ -47,6 +49,15 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
         {
             return NotFound($"Appointment with id {id} not found");
         }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid request: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error retrieving appointment: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -57,6 +68,7 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpPost]
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Create([FromBody] AppointmentCreateUpdateDto dto)
     {
         if (!ModelState.IsValid)
@@ -64,8 +76,28 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
             return BadRequest(ModelState);
         }
 
-        var createdAppointment = service.Create(dto);
-        return CreatedAtAction(nameof(Get), new { id = createdAppointment.Id }, createdAppointment);
+        try
+        {
+            var createdAppointment = service.Create(dto);
+            return CreatedAtAction(nameof(Get), new { id = createdAppointment.Id }, createdAppointment);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound($"Referenced entity not found: {ex.Message}");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid data: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Conflict: {ex.Message}"); 
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error creating appointment: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -78,6 +110,7 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [ProducesResponseType(typeof(AppointmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<AppointmentDto> Update(int id, [FromBody] AppointmentCreateUpdateDto dto)
     {
         if (!ModelState.IsValid)
@@ -90,9 +123,22 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
             var updatedAppointment = service.Update(id, dto);
             return Ok(updatedAppointment);
         }
-        catch (KeyNotFoundException)
+        catch (KeyNotFoundException ex)
         {
-            return NotFound($"Appointment with id {id} not found");
+            return NotFound($"Appointment or referenced entity not found: {ex.Message}");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid data: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Conflict: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error updating appointment: {ex.Message}");
         }
     }
 
@@ -104,6 +150,8 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Delete(int id)
     {
         try
@@ -114,6 +162,19 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
         catch (KeyNotFoundException)
         {
             return NotFound($"Appointment with id {id} not found");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid request: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Cannot delete appointment: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error deleting appointment: {ex.Message}");
         }
     }
 }

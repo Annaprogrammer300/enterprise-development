@@ -36,6 +36,8 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Get(int id)
     {
         try
@@ -47,6 +49,15 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
         {
             return NotFound($"Patient with id {id} not found");
         }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid request: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error retrieving patient: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -57,6 +68,7 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpPost]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Create([FromBody] PatientCreateUpdateDto dto)
     {
         if (!ModelState.IsValid)
@@ -64,8 +76,24 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
             return BadRequest(ModelState);
         }
 
-        var createdPatient = service.Create(dto);
-        return CreatedAtAction(nameof(Get), new { id = createdPatient.Id }, createdPatient);
+        try
+        {
+            var createdPatient = service.Create(dto);
+            return CreatedAtAction(nameof(Get), new { id = createdPatient.Id }, createdPatient);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid data: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Conflict: {ex.Message}"); // Например, дублирующий паспорт
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error creating patient: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -78,6 +106,7 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<PatientDto> Update(int id, [FromBody] PatientCreateUpdateDto dto)
     {
         if (!ModelState.IsValid)
@@ -94,6 +123,19 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
         {
             return NotFound($"Patient with id {id} not found");
         }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid data: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Conflict: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error updating patient: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -104,6 +146,8 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Delete(int id)
     {
         try
@@ -114,6 +158,19 @@ public class PatientsController(IApplicationService<PatientDto, PatientCreateUpd
         catch (KeyNotFoundException)
         {
             return NotFound($"Patient with id {id} not found");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest($"Invalid request: {ex.Message}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict($"Cannot delete patient: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Error deleting patient: {ex.Message}");
         }
     }
 }

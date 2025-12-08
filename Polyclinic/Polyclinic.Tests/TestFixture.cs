@@ -5,7 +5,7 @@ namespace Polyclinic.Tests;
 /// <summary>
 /// Test fixture for Polyclinic tests
 /// </summary>
-public class PolyclinicFixture 
+public class PolyclinicFixture
 {
     /// <summary>
     /// List of patients for testing
@@ -66,7 +66,7 @@ public class PolyclinicFixture
     /// <summary>
     /// Gets patients over specified age with multiple doctors
     /// </summary>
-    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date )
+    public List<DateTime> GetPatientsOverAgeWithMultipleDoctors(int age, DateTime date)
     {
         var cutoffDate = date.AddYears(-age);
         return [.. Appointments
