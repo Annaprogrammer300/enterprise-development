@@ -7,9 +7,13 @@ using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Application.Services;
 using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;
-using Polyclinic.Infrastructure.InMemory;
+using Microsoft.EntityFrameworkCore;
+using Polyclinic.Infrastructure.EfCore;
+using Polyclinic.Infrastructure.EfCore.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<PolyclinicDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PolyclinicDb")));
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -23,9 +27,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAutoMapper(typeof(PolyclinicProfile));
 
 // Register infrastructure services
-builder.Services.AddSingleton<IManager<Patient, int>, PatientInMemoryManager>();
-builder.Services.AddSingleton<IManager<Doctor, int>, DoctorInMemoryManager>();
-builder.Services.AddSingleton<IManager<Appointment, int>, AppointmentInMemoryManager>();
+builder.Services.AddScoped<IManager<Patient, int>, PatientEfCoreManager>();
+builder.Services.AddScoped<IManager<Doctor, int>, DoctorEfCoreManager>();
+builder.Services.AddScoped<IManager<Appointment, int>, AppointmentEfCoreManager>();
+
 
 // Register application services
 builder.Services.AddScoped<IApplicationService<PatientDto, PatientCreateUpdateDto, int>, PatientService>();

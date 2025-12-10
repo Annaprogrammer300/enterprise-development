@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Polyclinic.Application\Polyclinic.Application.csproj" />
-	<ProjectReference Include="..\Polyclinic.Infrastructure.InMemory\Polyclinic.Infrastructure.InMemory.csproj" />
+	<ProjectReference Include="..\Polyclinic.Infrastructure.EFCore\Polyclinic.Infrastructure.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

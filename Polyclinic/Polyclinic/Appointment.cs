@@ -9,11 +9,21 @@ public class Appointment
     /// Unique identifier for the appointment
     /// </summary>
     public int Id { get; set; }
+    
+    /// <summary>
+    /// Foreign key to Patient
+    /// </summary>
+    public int PatientId { get; set; }
 
     /// <summary>
     /// The patient who has an appointment
     /// </summary>
     public required Patient Patient { get; set; }
+
+    /// <summary>
+    /// Foreign key to Doctor
+    /// </summary>
+    public int DoctorId { get; set; }
 
     /// <summary>
     /// The doctor who sees the patient
