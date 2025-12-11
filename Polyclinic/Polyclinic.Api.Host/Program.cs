@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Polyclinic.Application;
 using Polyclinic.Application.Contracts;
@@ -7,15 +8,21 @@ using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Application.Services;
 using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
 using Polyclinic.Infrastructure.EfCore;
 using Polyclinic.Infrastructure.EfCore.Repositories;
+using Polyclinic.ServiceDefaults;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<PolyclinicDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PolyclinicDb")));
 
-// Add services to the container.
+builder.AddServiceDefaults();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -23,29 +30,29 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Polyclinic API", Version = "v1" });
 });
 
-// Add AutoMapper
-builder.Services.AddAutoMapper(typeof(PolyclinicProfile));
+builder.Services.AddDbContext<PolyclinicDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("polyclinicdb");
+    options.UseNpgsql(connectionString);
+});
 
-// Register infrastructure services
 builder.Services.AddScoped<IManager<Patient, int>, PatientEfCoreManager>();
 builder.Services.AddScoped<IManager<Doctor, int>, DoctorEfCoreManager>();
 builder.Services.AddScoped<IManager<Appointment, int>, AppointmentEfCoreManager>();
 
-
-// Register application services
 builder.Services.AddScoped<IApplicationService<PatientDto, PatientCreateUpdateDto, int>, PatientService>();
 builder.Services.AddScoped<IApplicationService<DoctorDto, DoctorCreateUpdateDto, int>, DoctorService>();
 builder.Services.AddScoped<IApplicationService<AppointmentDto, AppointmentCreateUpdateDto, int>, AppointmentService>();
 
-// Register domain service
 builder.Services.AddScoped<PolyclinicManager>();
-
-// Register analytics service
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+
+builder.Services.AddAutoMapper(typeof(PolyclinicProfile));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.MapDefaultEndpoints();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -55,5 +62,14 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<PolyclinicDbContext>();
+
+    context.Database.EnsureCreated();
+
+    await DbSeeder.SeedAllAsync(context);
+}
 
 app.Run();
