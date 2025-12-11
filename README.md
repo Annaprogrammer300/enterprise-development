@@ -1,10 +1,10 @@
 # Разработка корпоративных приложений
 [Таблица с успеваемостью](https://docs.google.com/spreadsheets/d/1JD6aiOG6r7GrA79oJncjgUHWtfeW4g_YZ9ayNgxb_w0/edit?usp=sharing)
 
-## Лабораторная работа 2: «Серверное приложение с Web API и аналитикой»
+## Лабораторная работа 3: «ORM и PostgreSQL»
 
 ## Описание проекта
-Проект представляет собой серверное приложение для управления данными поликлиники с RESTful Web API. Реализованы CRUD-операции для сущностей пациентов, врачей и записей на прием, а также аналитические запросы из первой лабораторной работы.
+Проект представляет собой серверное приложение для управления данными поликлиники с RESTful Web API и реляционной базой данных. Реализованы CRUD‑операции для сущностей пациентов, врачей и записей на приём, а также аналитические запросы. В третьей лабораторной работе хранение данных перенесено с in‑memory коллекций на **PostgreSQL** с использованием **Entity Framework Core** для ORM.
 
 ## Структура решения
 
@@ -62,6 +62,38 @@
   - `AnalyticsController` - аналитические endpoints
 
 **Конфигурация**: `Program.cs`, `appsettings.json`
+
+### Polyclinic.Infrastructure.EfCore
+
+**Назначение**: содержит реализацию доступа к данным через Entity Framework Core и PostgreSQL.
+
+- `PolyclinicDbContext` - DbContext для работы с БД PostgreSQL
+- `DbSeeder` - Данные для работы миграции
+- `PolyclinicDbContextFactory` - Для создания миграций через Add-Migration
+
+### Data/Migrations/
+- Миграция создания схемы и заполнения БД
+
+### Repositories/
+- `PatientEfCoreManager` - Репозиторий для работы с пациентами
+- `DoctorEfCoreManager` - Репозиторий для работы с врачами
+- `AppointmentEfCoreManager` - Репозиторий для работы с записями
+
+## Проект Polyclinic.ServiceDefaults
+**Назначение**: содержит стандартную конфигурацию для сервисов Aspire.
+
+## Проект Polyclinic.AppHost
+**Назначение**: оркестратор Aspire для управления сервисами и их развёртыванием.
+
+### Program.cs
+Конфигурация оркестратора Aspire:
+- Создание DistributedApplicationBuilder
+- Добавление ресурса PostgreSQL
+- Добавление сервиса API
+- Запуск оркестратора
+
+### appsettings.json
+Конфигурация и параметры запуска Aspire
 
 ## Функциональность
 
