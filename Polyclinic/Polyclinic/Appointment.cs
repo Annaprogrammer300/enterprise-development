@@ -9,7 +9,7 @@ public class Appointment
     /// Unique identifier for the appointment
     /// </summary>
     public int Id { get; set; }
-    
+
     /// <summary>
     /// Foreign key to Patient
     /// </summary>

@@ -20,7 +20,6 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
             builder.Property(d => d.PassportNumber).IsRequired();
             builder.Property(d => d.FullName).IsRequired();
 
-            // сидирование докторов
             builder.HasData(DataSeeder.GetDoctors());
         });
 
@@ -33,7 +32,6 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Phone).IsRequired();
 
-            // сидирование пациентов
             builder.HasData(DataSeeder.GetPatients());
         });
 
@@ -43,19 +41,18 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
             builder.HasKey(a => a.Id);
 
             builder.HasOne(a => a.Patient)
-                .WithMany() // у Patient нет коллекции Appointments
+                .WithMany()
                 .HasForeignKey(a => a.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(a => a.Doctor)
-                .WithMany() // у Doctor нет коллекции Appointments
+                .WithMany()
                 .HasForeignKey(a => a.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(a => a.DateTime).IsRequired();
             builder.Property(a => a.RoomNumber).IsRequired();
 
-            // сидирование приёмов: из DataSeeder берём Id пациента и доктора
             var appointmentsSeed = DataSeeder.GetAppointments()
                 .Select(a => new
                 {

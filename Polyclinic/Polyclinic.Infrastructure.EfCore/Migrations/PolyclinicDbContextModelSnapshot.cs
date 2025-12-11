@@ -57,7 +57,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 1,
-                        DateTime = new DateTime(2025, 8, 15, 14, 50, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 8, 15, 14, 50, 0, 0, DateTimeKind.Utc),
                         DoctorId = 1,
                         IsRepeat = false,
                         PatientId = 1,
@@ -66,7 +66,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 2,
-                        DateTime = new DateTime(2025, 6, 30, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 6, 30, 12, 30, 0, 0, DateTimeKind.Utc),
                         DoctorId = 2,
                         IsRepeat = true,
                         PatientId = 2,
@@ -75,7 +75,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 3,
-                        DateTime = new DateTime(2025, 10, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 10, 30, 12, 0, 0, 0, DateTimeKind.Utc),
                         DoctorId = 3,
                         IsRepeat = false,
                         PatientId = 3,
@@ -84,7 +84,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 4,
-                        DateTime = new DateTime(2025, 6, 7, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 6, 7, 11, 30, 0, 0, DateTimeKind.Utc),
                         DoctorId = 4,
                         IsRepeat = true,
                         PatientId = 4,
@@ -93,7 +93,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 5,
-                        DateTime = new DateTime(2025, 6, 10, 12, 20, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 6, 10, 12, 20, 0, 0, DateTimeKind.Utc),
                         DoctorId = 5,
                         IsRepeat = true,
                         PatientId = 5,
@@ -102,7 +102,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 6,
-                        DateTime = new DateTime(2025, 7, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 7, 24, 10, 0, 0, 0, DateTimeKind.Utc),
                         DoctorId = 5,
                         IsRepeat = false,
                         PatientId = 6,
@@ -111,7 +111,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 7,
-                        DateTime = new DateTime(2025, 6, 1, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 6, 1, 12, 30, 0, 0, DateTimeKind.Utc),
                         DoctorId = 1,
                         IsRepeat = true,
                         PatientId = 6,
@@ -120,7 +120,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 8,
-                        DateTime = new DateTime(2025, 3, 30, 14, 30, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 3, 30, 14, 30, 0, 0, DateTimeKind.Utc),
                         DoctorId = 3,
                         IsRepeat = false,
                         PatientId = 7,
@@ -129,7 +129,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 9,
-                        DateTime = new DateTime(2025, 6, 17, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 6, 17, 12, 0, 0, 0, DateTimeKind.Utc),
                         DoctorId = 8,
                         IsRepeat = true,
                         PatientId = 8,
@@ -138,7 +138,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 10,
-                        DateTime = new DateTime(2025, 8, 8, 16, 30, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 8, 8, 16, 30, 0, 0, DateTimeKind.Utc),
                         DoctorId = 9,
                         IsRepeat = false,
                         PatientId = 9,
@@ -147,7 +147,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     new
                     {
                         Id = 11,
-                        DateTime = new DateTime(2025, 9, 27, 12, 24, 0, 0, DateTimeKind.Unspecified),
+                        DateTime = new DateTime(2025, 9, 27, 12, 24, 0, 0, DateTimeKind.Utc),
                         DoctorId = 10,
                         IsRepeat = true,
                         PatientId = 10,
@@ -322,7 +322,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 1,
                         Address = "ул. Ленина, 1",
-                        BirthDate = new DateTime(1990, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1990, 5, 12, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 0,
                         FullName = "Иванов Иван",
                         Gender = 0,
@@ -334,7 +334,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 2,
                         Address = "ул. Гагарина, 2",
-                        BirthDate = new DateTime(1985, 8, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1985, 8, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 1,
                         FullName = "Петров Петр",
                         Gender = 0,
@@ -346,7 +346,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 3,
                         Address = "ул. Молодежная, 5",
-                        BirthDate = new DateTime(1995, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1995, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 2,
                         FullName = "Сидорова Анна",
                         Gender = 1,
@@ -358,7 +358,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 4,
                         Address = "ул. Советская, 9",
-                        BirthDate = new DateTime(2000, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(2000, 3, 22, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 0,
                         FullName = "Кузнецов Сергей",
                         Gender = 0,
@@ -370,7 +370,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 5,
                         Address = "ул. Победы, 10",
-                        BirthDate = new DateTime(1978, 7, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1978, 7, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 3,
                         FullName = "Смирнова Мария",
                         Gender = 1,
@@ -382,7 +382,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 6,
                         Address = "ул. Центральная, 12",
-                        BirthDate = new DateTime(1992, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1992, 11, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 1,
                         FullName = "Орлов Дмитрий",
                         Gender = 0,
@@ -394,7 +394,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 7,
                         Address = "ул. Чехова, 3",
-                        BirthDate = new DateTime(1988, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1988, 2, 9, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 2,
                         FullName = "Васильева Ирина",
                         Gender = 1,
@@ -406,7 +406,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 8,
                         Address = "ул. Спортивная, 4",
-                        BirthDate = new DateTime(1999, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1999, 1, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 0,
                         FullName = "Морозов Алексей",
                         Gender = 0,
@@ -418,7 +418,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 9,
                         Address = "ул. Пушкина, 8",
-                        BirthDate = new DateTime(1980, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1980, 4, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 3,
                         FullName = "Николаева Елена",
                         Gender = 1,
@@ -430,7 +430,7 @@ partial class PolyclinicDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = 10,
                         Address = "ул. Луговая, 6",
-                        BirthDate = new DateTime(1993, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                        BirthDate = new DateTime(1993, 6, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                         BloodGroup = 1,
                         FullName = "Зайцев Павел",
                         Gender = 0,

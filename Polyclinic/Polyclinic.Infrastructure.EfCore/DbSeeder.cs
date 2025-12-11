@@ -13,8 +13,6 @@ public static class DbSeeder
     /// Seeds the database with patients if the table is empty.
     /// Also resets the auto-increment counter to continue from the next available ID.
     /// </summary>
-    /// <param name="context">The database context to seed data into.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
     public static async Task SeedPatientsAsync(PolyclinicDbContext context)
     {
         if (!await context.Patients.AnyAsync())
@@ -25,7 +23,7 @@ public static class DbSeeder
 
         var next = (await context.Patients.MaxAsync(p => (int?)p.Id) ?? 0) + 1;
         await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Patients\"', 'id'), {next});"
+            $"SELECT setval(pg_get_serial_sequence('\"Patients\"', 'Id'), {next});"
         );
     }
 
@@ -33,8 +31,6 @@ public static class DbSeeder
     /// Seeds the database with doctors if the table is empty.
     /// Also resets the auto-increment counter to continue from the next available ID.
     /// </summary>
-    /// <param name="context">The database context to seed data into.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
     public static async Task SeedDoctorsAsync(PolyclinicDbContext context)
     {
         if (!await context.Doctors.AnyAsync())
@@ -45,17 +41,14 @@ public static class DbSeeder
 
         var next = (await context.Doctors.MaxAsync(d => (int?)d.Id) ?? 0) + 1;
         await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Doctors\"', 'id'), {next});"
+            $"SELECT setval(pg_get_serial_sequence('\"Doctors\"', 'Id'), {next});"
         );
     }
 
     /// <summary>
     /// Seeds the database with appointments if the table is empty.
     /// Also resets the auto-increment counter to continue from the next available ID.
-    /// Requires that patients and doctors are seeded first.
     /// </summary>
-    /// <param name="context">The database context to seed data into.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
     public static async Task SeedAppointmentsAsync(PolyclinicDbContext context)
     {
         if (!await context.Appointments.AnyAsync())
@@ -66,7 +59,7 @@ public static class DbSeeder
 
         var next = (await context.Appointments.MaxAsync(a => (int?)a.Id) ?? 0) + 1;
         await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Appointments\"', 'id'), {next});"
+            $"SELECT setval(pg_get_serial_sequence('\"Appointments\"', 'Id'), {next});"
         );
     }
 

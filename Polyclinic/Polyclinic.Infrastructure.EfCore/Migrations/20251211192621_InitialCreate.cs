@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -102,16 +101,16 @@ public partial class InitialCreate : Migration
             columns: new[] { "Id", "Address", "BirthDate", "BloodGroup", "FullName", "Gender", "PassportNumber", "Phone", "RhesusFactor" },
             values: new object[,]
             {
-                { 1, "ул. Ленина, 1", new DateTime(1990, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Иванов Иван", 0, "P001", "111-111", 0 },
-                { 2, "ул. Гагарина, 2", new DateTime(1985, 8, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Петров Петр", 0, "P002", "222-222", 1 },
-                { 3, "ул. Молодежная, 5", new DateTime(1995, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Сидорова Анна", 1, "P003", "333-333", 0 },
-                { 4, "ул. Советская, 9", new DateTime(2000, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Кузнецов Сергей", 0, "P004", "444-444", 1 },
-                { 5, "ул. Победы, 10", new DateTime(1978, 7, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Смирнова Мария", 1, "P005", "555-555", 0 },
-                { 6, "ул. Центральная, 12", new DateTime(1992, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Орлов Дмитрий", 0, "P006", "666-666", 0 },
-                { 7, "ул. Чехова, 3", new DateTime(1988, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Васильева Ирина", 1, "P007", "777-777", 1 },
-                { 8, "ул. Спортивная, 4", new DateTime(1999, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Морозов Алексей", 0, "P008", "888-888", 0 },
-                { 9, "ул. Пушкина, 8", new DateTime(1980, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Николаева Елена", 1, "P009", "999-999", 1 },
-                { 10, "ул. Луговая, 6", new DateTime(1993, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Зайцев Павел", 0, "P010", "101-010", 0 }
+                { 1, "ул. Ленина, 1", new DateTime(1990, 5, 12, 0, 0, 0, 0, DateTimeKind.Utc), 0, "Иванов Иван", 0, "P001", "111-111", 0 },
+                { 2, "ул. Гагарина, 2", new DateTime(1985, 8, 3, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Петров Петр", 0, "P002", "222-222", 1 },
+                { 3, "ул. Молодежная, 5", new DateTime(1995, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Сидорова Анна", 1, "P003", "333-333", 0 },
+                { 4, "ул. Советская, 9", new DateTime(2000, 3, 22, 0, 0, 0, 0, DateTimeKind.Utc), 0, "Кузнецов Сергей", 0, "P004", "444-444", 1 },
+                { 5, "ул. Победы, 10", new DateTime(1978, 7, 19, 0, 0, 0, 0, DateTimeKind.Utc), 3, "Смирнова Мария", 1, "P005", "555-555", 0 },
+                { 6, "ул. Центральная, 12", new DateTime(1992, 11, 11, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Орлов Дмитрий", 0, "P006", "666-666", 0 },
+                { 7, "ул. Чехова, 3", new DateTime(1988, 2, 9, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Васильева Ирина", 1, "P007", "777-777", 1 },
+                { 8, "ул. Спортивная, 4", new DateTime(1999, 1, 15, 0, 0, 0, 0, DateTimeKind.Utc), 0, "Морозов Алексей", 0, "P008", "888-888", 0 },
+                { 9, "ул. Пушкина, 8", new DateTime(1980, 4, 4, 0, 0, 0, 0, DateTimeKind.Utc), 3, "Николаева Елена", 1, "P009", "999-999", 1 },
+                { 10, "ул. Луговая, 6", new DateTime(1993, 6, 6, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Зайцев Павел", 0, "P010", "101-010", 0 }
             });
 
         migrationBuilder.InsertData(
@@ -119,17 +118,17 @@ public partial class InitialCreate : Migration
             columns: new[] { "Id", "DateTime", "DoctorId", "IsRepeat", "PatientId", "RoomNumber" },
             values: new object[,]
             {
-                { 1, new DateTime(2025, 8, 15, 14, 50, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 101 },
-                { 2, new DateTime(2025, 6, 30, 12, 30, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 102 },
-                { 3, new DateTime(2025, 10, 30, 12, 0, 0, 0, DateTimeKind.Unspecified), 3, false, 3, 103 },
-                { 4, new DateTime(2025, 6, 7, 11, 30, 0, 0, DateTimeKind.Unspecified), 4, true, 4, 104 },
-                { 5, new DateTime(2025, 6, 10, 12, 20, 0, 0, DateTimeKind.Unspecified), 5, true, 5, 105 },
-                { 6, new DateTime(2025, 7, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 5, false, 6, 105 },
-                { 7, new DateTime(2025, 6, 1, 12, 30, 0, 0, DateTimeKind.Unspecified), 1, true, 6, 101 },
-                { 8, new DateTime(2025, 3, 30, 14, 30, 0, 0, DateTimeKind.Unspecified), 3, false, 7, 103 },
-                { 9, new DateTime(2025, 6, 17, 12, 0, 0, 0, DateTimeKind.Unspecified), 8, true, 8, 108 },
-                { 10, new DateTime(2025, 8, 8, 16, 30, 0, 0, DateTimeKind.Unspecified), 9, false, 9, 108 },
-                { 11, new DateTime(2025, 9, 27, 12, 24, 0, 0, DateTimeKind.Unspecified), 10, true, 10, 109 }
+                { 1, new DateTime(2025, 8, 15, 14, 50, 0, 0, DateTimeKind.Utc), 1, false, 1, 101 },
+                { 2, new DateTime(2025, 6, 30, 12, 30, 0, 0, DateTimeKind.Utc), 2, true, 2, 102 },
+                { 3, new DateTime(2025, 10, 30, 12, 0, 0, 0, DateTimeKind.Utc), 3, false, 3, 103 },
+                { 4, new DateTime(2025, 6, 7, 11, 30, 0, 0, DateTimeKind.Utc), 4, true, 4, 104 },
+                { 5, new DateTime(2025, 6, 10, 12, 20, 0, 0, DateTimeKind.Utc), 5, true, 5, 105 },
+                { 6, new DateTime(2025, 7, 24, 10, 0, 0, 0, DateTimeKind.Utc), 5, false, 6, 105 },
+                { 7, new DateTime(2025, 6, 1, 12, 30, 0, 0, DateTimeKind.Utc), 1, true, 6, 101 },
+                { 8, new DateTime(2025, 3, 30, 14, 30, 0, 0, DateTimeKind.Utc), 3, false, 7, 103 },
+                { 9, new DateTime(2025, 6, 17, 12, 0, 0, 0, DateTimeKind.Utc), 8, true, 8, 108 },
+                { 10, new DateTime(2025, 8, 8, 16, 30, 0, 0, DateTimeKind.Utc), 9, false, 9, 108 },
+                { 11, new DateTime(2025, 9, 27, 12, 24, 0, 0, DateTimeKind.Utc), 10, true, 10, 109 }
             });
 
         migrationBuilder.CreateIndex(

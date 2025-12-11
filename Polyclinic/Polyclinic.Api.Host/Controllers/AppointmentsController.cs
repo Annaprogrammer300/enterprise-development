@@ -91,7 +91,7 @@ public class AppointmentsController(IApplicationService<AppointmentDto, Appointm
         }
         catch (InvalidOperationException ex)
         {
-            return Conflict($"Conflict: {ex.Message}"); 
+            return Conflict($"Conflict: {ex.Message}");
         }
         catch (Exception ex)
         {
