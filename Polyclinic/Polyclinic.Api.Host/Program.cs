@@ -67,7 +67,6 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<PolyclinicDbContext>();
 
-    context.Database.EnsureCreated();
 
     await DbSeeder.SeedAllAsync(context);
 }
