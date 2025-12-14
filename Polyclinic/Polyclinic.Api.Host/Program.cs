@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Polyclinic.Application;
 using Polyclinic.Application.Contracts;
@@ -30,11 +29,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Polyclinic API", Version = "v1" });
 });
 
-builder.Services.AddDbContext<PolyclinicDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("polyclinicdb");
-    options.UseNpgsql(connectionString);
-});
+builder.AddNpgsqlDbContext<PolyclinicDbContext>("postgresDb");
 
 builder.Services.AddScoped<IManager<Patient, int>, PatientEfCoreManager>();
 builder.Services.AddScoped<IManager<Doctor, int>, DoctorEfCoreManager>();
@@ -67,6 +62,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<PolyclinicDbContext>();
 
+    context.Database.EnsureCreated();
 
     await DbSeeder.SeedAllAsync(context);
 }

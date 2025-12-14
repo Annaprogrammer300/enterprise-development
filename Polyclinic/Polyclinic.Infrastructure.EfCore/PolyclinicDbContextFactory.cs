@@ -12,7 +12,7 @@ public class PolyclinicDbContextFactory : IDesignTimeDbContextFactory<Polyclinic
 
         var configuration = new ConfigurationBuilder()
             .SetBasePath(basePath)
-            .AddJsonFile("appsettings.json", optional: false) 
+            .AddJsonFile("appsettings.json", optional: false)
             .Build();
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");

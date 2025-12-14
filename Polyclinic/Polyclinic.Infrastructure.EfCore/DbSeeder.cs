@@ -20,11 +20,6 @@ public static class DbSeeder
             context.Patients.AddRange(DataSeeder.GetPatients());
             await context.SaveChangesAsync();
         }
-
-        var next = (await context.Patients.MaxAsync(p => (int?)p.Id) ?? 0) + 1;
-        await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Patients\"', 'Id'), {next});"
-        );
     }
 
     /// <summary>
@@ -38,11 +33,6 @@ public static class DbSeeder
             context.Doctors.AddRange(DataSeeder.GetDoctors());
             await context.SaveChangesAsync();
         }
-
-        var next = (await context.Doctors.MaxAsync(d => (int?)d.Id) ?? 0) + 1;
-        await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Doctors\"', 'Id'), {next});"
-        );
     }
 
     /// <summary>
@@ -56,11 +46,6 @@ public static class DbSeeder
             context.Appointments.AddRange(DataSeeder.GetAppointments());
             await context.SaveChangesAsync();
         }
-
-        var next = (await context.Appointments.MaxAsync(a => (int?)a.Id) ?? 0) + 1;
-        await context.Database.ExecuteSqlAsync(
-            $"SELECT setval(pg_get_serial_sequence('\"Appointments\"', 'Id'), {next});"
-        );
     }
 
     /// <summary>

@@ -17,6 +17,8 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Doctor>(builder =>
         {
             builder.HasKey(d => d.Id);
+            builder.Property(d => d.Id)
+                .UseIdentityAlwaysColumn();
             builder.Property(d => d.PassportNumber).IsRequired();
             builder.Property(d => d.FullName).IsRequired();
 
@@ -27,6 +29,8 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Patient>(builder =>
         {
             builder.HasKey(p => p.Id);
+            builder.Property(p => p.Id)
+                .UseIdentityAlwaysColumn();
             builder.Property(p => p.PassportNumber).IsRequired();
             builder.Property(p => p.FullName).IsRequired();
             builder.Property(p => p.Address).IsRequired();
@@ -39,7 +43,8 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Appointment>(builder =>
         {
             builder.HasKey(a => a.Id);
-
+            builder.Property(a => a.Id)
+                .UseIdentityAlwaysColumn();
             builder.HasOne(a => a.Patient)
                 .WithMany()
                 .HasForeignKey(a => a.PatientId)

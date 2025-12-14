@@ -25,7 +25,7 @@ public class PatientEfCoreManager : IManager<Patient, int>
         _patients.FirstOrDefault(p => p.Id == entityId);
 
     public List<Patient> ReadAll() =>
-        _patients.ToList();
+        [.. _patients];
 
     public void Update(Patient entity)
     {

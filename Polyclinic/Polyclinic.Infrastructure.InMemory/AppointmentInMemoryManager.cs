@@ -1,7 +1,6 @@
 ﻿using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;
 
-
 namespace Polyclinic.Infrastructure.InMemory;
 
 /// <summary>

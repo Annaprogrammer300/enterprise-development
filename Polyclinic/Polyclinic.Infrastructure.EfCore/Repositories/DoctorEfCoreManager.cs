@@ -25,7 +25,7 @@ public class DoctorEfCoreManager : IManager<Doctor, int>
         _doctors.FirstOrDefault(d => d.Id == entityId);
 
     public List<Doctor> ReadAll() =>
-        _doctors.ToList();
+        [.. _doctors];
 
     public void Update(Doctor entity)
     {

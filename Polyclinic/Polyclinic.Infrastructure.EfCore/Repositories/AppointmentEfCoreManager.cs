@@ -28,10 +28,9 @@ public class AppointmentEfCoreManager : IManager<Appointment, int>
             .FirstOrDefault(a => a.Id == entityId);
 
     public List<Appointment> ReadAll() =>
-        _appointments
+        [.. _appointments
             .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ToList();
+            .Include(a => a.Doctor)];
 
     public void Update(Appointment entity)
     {

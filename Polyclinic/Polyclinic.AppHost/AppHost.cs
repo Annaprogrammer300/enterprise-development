@@ -1,12 +1,13 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres");
+var postgres = builder.AddPostgres("postgres")
+    .WithPgAdmin()
+    .WithDataVolume();
 
-var postgresDb = postgres.AddDatabase("polyclinicdb");
-
-var _ = builder.AddProject<Projects.Polyclinic_Api_Host>("polyclinic-api-host")
-    .WithReference(postgresDb, "postgresDb")
+var postgresDb = postgres.AddDatabase("postgresDb");
+builder
+    .AddProject<Projects.Polyclinic_Api_Host>("api")
+    .WithReference(postgresDb)
     .WaitFor(postgresDb);
-
 
 builder.Build().Run();

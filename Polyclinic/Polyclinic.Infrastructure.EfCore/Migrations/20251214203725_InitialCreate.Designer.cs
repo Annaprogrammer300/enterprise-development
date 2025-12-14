@@ -12,7 +12,7 @@ using Polyclinic.Infrastructure.EfCore;
 namespace Polyclinic.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(PolyclinicDbContext))]
-    [Migration("20251211192621_InitialCreate")]
+    [Migration("20251214203725_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -31,7 +31,7 @@ namespace Polyclinic.Infrastructure.EfCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
@@ -164,7 +164,7 @@ namespace Polyclinic.Infrastructure.EfCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BirthYear")
                         .HasColumnType("integer");
@@ -286,7 +286,7 @@ namespace Polyclinic.Infrastructure.EfCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
