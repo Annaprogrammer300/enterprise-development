@@ -21,8 +21,6 @@ public class PatientService(IManager<Patient, int> manager, IMapper mapper) : IA
     public PatientDto Create(PatientCreateUpdateDto dto)
     {
         var newPatient = mapper.Map<Patient>(dto);
-        var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(p => p.Id) : 0;
-        newPatient.Id = lastId + 1;
         manager.Create(newPatient);
         return mapper.Map<PatientDto>(newPatient);
     }

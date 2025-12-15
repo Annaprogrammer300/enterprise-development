@@ -18,11 +18,10 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         {
             builder.HasKey(d => d.Id);
             builder.Property(d => d.Id)
-                .UseIdentityAlwaysColumn();
+                .UseIdentityColumn();
             builder.Property(d => d.PassportNumber).IsRequired();
             builder.Property(d => d.FullName).IsRequired();
 
-            builder.HasData(DataSeeder.GetDoctors());
         });
 
         // Patient
@@ -30,13 +29,12 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         {
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)
-                .UseIdentityAlwaysColumn();
+                .UseIdentityColumn();
             builder.Property(p => p.PassportNumber).IsRequired();
             builder.Property(p => p.FullName).IsRequired();
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Phone).IsRequired();
 
-            builder.HasData(DataSeeder.GetPatients());
         });
 
         // Appointment
@@ -44,32 +42,17 @@ public class PolyclinicDbContext(DbContextOptions options) : DbContext(options)
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Id)
-                .UseIdentityAlwaysColumn();
+                .UseIdentityColumn();
             builder.HasOne(a => a.Patient)
                 .WithMany()
                 .HasForeignKey(a => a.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasOne(a => a.Doctor)
                 .WithMany()
                 .HasForeignKey(a => a.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
-
             builder.Property(a => a.DateTime).IsRequired();
             builder.Property(a => a.RoomNumber).IsRequired();
-
-            var appointmentsSeed = DataSeeder.GetAppointments()
-                .Select(a => new
-                {
-                    a.Id,
-                    a.DateTime,
-                    a.RoomNumber,
-                    a.IsRepeat,
-                    PatientId = a.Patient.Id,
-                    DoctorId = a.Doctor.Id
-                });
-
-            builder.HasData(appointmentsSeed);
         });
     }
 }

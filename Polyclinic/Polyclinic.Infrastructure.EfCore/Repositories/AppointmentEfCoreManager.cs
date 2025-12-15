@@ -30,7 +30,8 @@ public class AppointmentEfCoreManager : IManager<Appointment, int>
     public List<Appointment> ReadAll() =>
         [.. _appointments
             .Include(a => a.Patient)
-            .Include(a => a.Doctor)];
+            .Include(a => a.Doctor)
+            .OrderBy(a => a.Id)];
 
     public void Update(Appointment entity)
     {

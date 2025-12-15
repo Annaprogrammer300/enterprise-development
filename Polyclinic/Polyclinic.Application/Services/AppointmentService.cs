@@ -24,8 +24,6 @@ public class AppointmentService(IManager<Appointment, int> manager, IManager<Pat
     public AppointmentDto Create(AppointmentCreateUpdateDto dto)
     {
         var newAppointment = mapper.Map<Appointment>(dto);
-        var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(a => a.Id) : 0;
-        newAppointment.Id = lastId + 1;
         var patient = patientManager.Read(dto.PatientId);
         var doctor = doctorManager.Read(dto.DoctorId);
         if (patient == null)

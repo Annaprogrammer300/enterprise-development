@@ -21,8 +21,6 @@ public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApp
     public DoctorDto Create(DoctorCreateUpdateDto dto)
     {
         var newDoctor = mapper.Map<Doctor>(dto);
-        var lastId = manager.ReadAll().Count > 0 ? manager.ReadAll().Max(d => d.Id) : 0;
-        newDoctor.Id = lastId + 1;
         manager.Create(newDoctor);
         return mapper.Map<DoctorDto>(newDoctor);
     }
