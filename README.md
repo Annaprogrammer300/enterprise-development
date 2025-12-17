@@ -1,10 +1,10 @@
 # Разработка корпоративных приложений
 [Таблица с успеваемостью](https://docs.google.com/spreadsheets/d/1JD6aiOG6r7GrA79oJncjgUHWtfeW4g_YZ9ayNgxb_w0/edit?usp=sharing)
 
-## Лабораторная работа 3: «ORM и PostgreSQL»
+## Лабораторная работа 4: «Инфраструктура» - gRPC и генерация данных
 
 ## Описание проекта
-Проект представляет собой серверное приложение для управления данными поликлиники с RESTful Web API и реляционной базой данных. Реализованы CRUD‑операции для сущностей пациентов, врачей и записей на приём, а также аналитические запросы. В третьей лабораторной работе хранение данных перенесено с in‑memory коллекций на **PostgreSQL** с использованием **Entity Framework Core** для ORM.
+Четвёртая лабораторная работа реализует **инфраструктуру для генерации и передачи контрактов между сервисами**. Основная задача — создать отдельное приложение-генератор, которое передает данные серверу через gRPC в потоковом режиме, с поддержкой PostgreSQL и интеграцией с Aspire.
 
 ## Структура решения
 
@@ -60,6 +60,10 @@
   - `DoctorsController` - CRUD для врачей  
   - `AppointmentsController` - CRUD для записей
   - `AnalyticsController` - аналитические endpoints
+  - `GeneratorController` - управление генерацией 
+### HostedServices/
+- `PatientGeneratorHostedService` - фоновая генерация 
+- `PatientConsumerHostedService` - обработка сообщений 
 
 **Конфигурация**: `Program.cs`, `appsettings.json`
 
@@ -95,7 +99,19 @@
 ### appsettings.json
 Конфигурация и параметры запуска Aspire
 
-## Функциональность
+## Polyclinic.Generator 
+**Назначение**: Самостоятельное приложение для генерации и отправки пациентов
+### Generator/
+- `PatientGenerator.cs` - Генератор случайных пациентов
+### Services/
+- `IProducerService.cs` - Интерфейс сервиса отправки (провайдер контрактов)
+- `ProducerService.cs` - Реализация отправки данных в БД
+
+## Polyclinic.Generator.Grpc.Host (gRPC хост для потоковой передачи)
+**Назначение**: Сервис с gRPC API для потоковой передачи пациентов
+- `Program.cs` - Конфигурация приложения генератора
+### Services/
+- `PatientGrpcGeneratorService.cs` -  реализация gRPC
 
 ### CRUD операции
 
@@ -119,6 +135,14 @@
 - `POST /api/appointments` - создать новую запись
 - `PUT /api/appointments/{id}` - обновить запись
 - `DELETE /api/appointments/{id}` - удалить запись
+
+### Генератор пациентов (`/api/generator/generate`)
+- **GET /api/generator/generate** - запуск генерации пациентов
+  - Параметры:
+    - `batchSize` (int, default=10) - размер батча
+    - `payloadLimit` (int, default=5) - количество батчей
+    - `waitTime` (int, default=2) - пауза между батчами в сек
+  - Возвращает: список сгенерированных пациентов (PatientDto)
 
 ### Аналитические endpoints (`/api/analytics`)
 
