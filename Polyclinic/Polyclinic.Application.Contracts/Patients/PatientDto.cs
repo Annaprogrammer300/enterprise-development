@@ -1,25 +1,77 @@
 ﻿namespace Polyclinic.Application.Contracts.Patients;
 
 /// <summary>
-/// DTO for GET requests to patients
+/// DTO for GET requests to patients (used in API responses)
+/// Must match the properties of the Domain Entity Patient
 /// </summary>
-/// <param name="Id">Patient ID</param>
-/// <param name="PassportNumber">Patient passport number</param>
-/// <param name="FullName">Patient full name</param>
-/// <param name="Gender">Patient gender</param>
-/// <param name="BirthDate">Patient's date of birth</param>
-/// <param name="Address">Patient's residential address</param>
-/// <param name="BloodGroup">Patient's blood group</param>
-/// <param name="RhesusFactor">Patient's Rh factor</param>
-/// <param name="Phone">Patient's contact phone number</param>
-public record PatientDto(
-    int Id,
-    string PassportNumber,
-    string FullName,
-    string Gender,
-    DateTime BirthDate,
-    string Address,
-    string BloodGroup,
-    string RhesusFactor,
-    string Phone
-);
+public class PatientDto
+{
+    /// <summary>
+    /// The unique identifier of the patient
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
+    /// Patient's passport number
+    /// </summary>
+    public string PassportNumber { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Patient's full name
+    /// </summary>
+    public string FullName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Patient's gender
+    /// </summary>
+    public string Gender { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Patient's date of birth
+    /// </summary>
+    public DateTime BirthDate { get; set; }
+
+    /// <summary>
+    /// Residential address
+    /// </summary>
+    public string Address { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Blood type
+    /// </summary>
+    public string BloodGroup { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The Rh factor
+    /// </summary>
+    public string RhesusFactor { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Phone number
+    /// </summary>
+    public string Phone { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Кconstructor without parameters
+    /// </summary>
+    public PatientDto()
+    {
+    }
+
+    /// <summary>
+    /// Constructor with all parameters
+    /// </summary>
+    public PatientDto(int id, string passportNumber, string fullName, string gender,
+        DateTime birthDate, string address, string bloodGroup, string rhesusFactor, string phone)
+    {
+        Id = id;
+        PassportNumber = passportNumber;
+        FullName = fullName;
+        Gender = gender;
+        BirthDate = birthDate;
+        Address = address;
+        BloodGroup = bloodGroup;
+        RhesusFactor = rhesusFactor;
+        Phone = phone;
+    }
+}

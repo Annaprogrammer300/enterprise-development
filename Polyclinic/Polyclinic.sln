@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.AppHost", "Polyc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.ServiceDefaults", "Polyclinic.ServiceDefaults\Polyclinic.ServiceDefaults.csproj", "{A558BC4E-8047-457E-B916-A18692723E25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Generator", "Polyclinic.Generator\Polyclinic.Generator.csproj", "{E77567D6-883E-45ED-B2E5-7D543CC9C971}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Generator.Grpc.Host", "Polyclinic.Generator.Grpc.Host\Polyclinic.Generator.Grpc.Host.csproj", "{B0328354-EFB7-4013-8A05-B2FFD77AA384}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{A558BC4E-8047-457E-B916-A18692723E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A558BC4E-8047-457E-B916-A18692723E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A558BC4E-8047-457E-B916-A18692723E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E77567D6-883E-45ED-B2E5-7D543CC9C971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E77567D6-883E-45ED-B2E5-7D543CC9C971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E77567D6-883E-45ED-B2E5-7D543CC9C971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E77567D6-883E-45ED-B2E5-7D543CC9C971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0328354-EFB7-4013-8A05-B2FFD77AA384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0328354-EFB7-4013-8A05-B2FFD77AA384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0328354-EFB7-4013-8A05-B2FFD77AA384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0328354-EFB7-4013-8A05-B2FFD77AA384}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,10 +15,11 @@ public class PatientEfCoreManager : IManager<Patient, int>
         _patients = _db.Set<Patient>();
     }
 
-    public void Create(Patient entity)
+    public Patient Create(Patient entity)
     {
         _patients.Add(entity);
         _db.SaveChanges();
+        return entity;
     }
 
     public Patient? Read(int entityId) =>

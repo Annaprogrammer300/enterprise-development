@@ -7,6 +7,8 @@ using Polyclinic.Application.Contracts.Patients;
 using Polyclinic.Application.Services;
 using Polyclinic.Domain;
 using Polyclinic.Domain.Abstractions;
+using Polyclinic.Generator.Grpc.Host.Services;
+using Polyclinic.Generator.Services;
 using Polyclinic.Infrastructure.EfCore;
 using Polyclinic.Infrastructure.EfCore.Repositories;
 using Polyclinic.ServiceDefaults;
@@ -41,6 +43,10 @@ builder.Services.AddScoped<IApplicationService<AppointmentDto, AppointmentCreate
 
 builder.Services.AddScoped<PolyclinicManager>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+
+builder.Services.AddScoped<IProducerService, ProducerService>();
+
+builder.Services.AddScoped<PatientGrpcGeneratorServiceImpl>();
 
 builder.Services.AddAutoMapper(typeof(PolyclinicProfile));
 

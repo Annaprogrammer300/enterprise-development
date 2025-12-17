@@ -21,8 +21,8 @@ public class DoctorService(IManager<Doctor, int> manager, IMapper mapper) : IApp
     public DoctorDto Create(DoctorCreateUpdateDto dto)
     {
         var newDoctor = mapper.Map<Doctor>(dto);
-        manager.Create(newDoctor);
-        return mapper.Map<DoctorDto>(newDoctor);
+        var createdDoctor = manager.Create(newDoctor);
+        return mapper.Map<DoctorDto>(createdDoctor);
     }
 
     /// <summary>

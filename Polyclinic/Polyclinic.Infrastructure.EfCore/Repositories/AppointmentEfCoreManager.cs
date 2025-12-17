@@ -15,10 +15,11 @@ public class AppointmentEfCoreManager : IManager<Appointment, int>
         _appointments = _db.Set<Appointment>();
     }
 
-    public void Create(Appointment entity)
+    public Appointment Create(Appointment entity)
     {
         _appointments.Add(entity);
         _db.SaveChanges();
+        return entity;
     }
 
     public Appointment? Read(int entityId) =>

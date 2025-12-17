@@ -14,7 +14,11 @@ public class DoctorInMemoryManager : IManager<Doctor, int>
     /// Adds a new Doctor entity to the in-memory collection.
     /// </summary>
     /// <param name="entity">The Doctor entity to add.</param>
-    public void Create(Doctor entity) => _doctors.Add(entity);
+    public Doctor Create(Doctor entity)
+    {
+        _doctors.Add(entity);
+        return entity;
+    }
 
     /// <summary>
     /// Retrieves a Doctor entity by its unique identifier.

@@ -13,7 +13,8 @@ public interface IManager<TEntity, TKey>
     /// Creating a new entity
     /// </summary>
     /// <param name="entity">New entity</param>
-    public void Create(TEntity entity);
+    /// <returns>The created entity with generated ID</returns>
+    public TEntity Create(TEntity entity);
 
     /// <summary>
     /// Getting an entity by ID

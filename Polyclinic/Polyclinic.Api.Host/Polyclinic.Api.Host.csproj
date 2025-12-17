@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Polyclinic.Application\Polyclinic.Application.csproj" />
+    <ProjectReference Include="..\Polyclinic.Generator.Grpc.Host\Polyclinic.Generator.Grpc.Host.csproj" />
+    <ProjectReference Include="..\Polyclinic.Generator\Polyclinic.Generator.csproj" />
 	<ProjectReference Include="..\Polyclinic.Infrastructure.EFCore\Polyclinic.Infrastructure.EFCore.csproj" />
 	<ProjectReference Include="..\Polyclinic.ServiceDefaults\Polyclinic.ServiceDefaults.csproj" />
   </ItemGroup>

@@ -32,8 +32,8 @@ public class AppointmentService(IManager<Appointment, int> manager, IManager<Pat
             throw new ArgumentException($"Doctor with id {dto.DoctorId} not found");
         newAppointment.Patient = patient;
         newAppointment.Doctor = doctor;
-        manager.Create(newAppointment);
-        return mapper.Map<AppointmentDto>(newAppointment);
+        var createdAppointment = manager.Create(newAppointment);
+        return mapper.Map<AppointmentDto>(createdAppointment);
     }
 
     /// <summary>

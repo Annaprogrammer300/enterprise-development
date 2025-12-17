@@ -14,7 +14,11 @@ public class AppointmentInMemoryManager : IManager<Appointment, int>
     /// Adds a new Appointment entity to the in-memory collection.
     /// </summary>
     /// <param name="entity">The Appointment entity to add.</param>
-    public void Create(Appointment entity) => _appointments.Add(entity);
+    public Appointment Create(Appointment entity)
+    {
+        _appointments.Add(entity);
+        return entity;
+    }
 
     /// <summary>
     /// Retrieves an Appointment entity by its unique identifier.
