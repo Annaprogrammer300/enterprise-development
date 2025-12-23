@@ -17,7 +17,18 @@ public static class DbSeeder
     {
         if (!await context.Patients.AnyAsync())
         {
-            context.Patients.AddRange(DataSeeder.GetPatients());
+            var patients = DataSeeder.GetPatients();
+
+            foreach (var p in patients)
+            {
+                if (p.BirthDate.Kind == DateTimeKind.Unspecified)
+                {
+                    // считаем, что дата в локном времени и приводим к UTC
+                    p.BirthDate = DateTime.SpecifyKind(p.BirthDate, DateTimeKind.Utc);
+                }
+            }
+
+            context.Patients.AddRange(patients);
             await context.SaveChangesAsync();
         }
     }
@@ -43,7 +54,21 @@ public static class DbSeeder
     {
         if (!await context.Appointments.AnyAsync())
         {
-            context.Appointments.AddRange(DataSeeder.GetAppointments());
+            var appointments = DataSeeder.GetAppointments();
+
+            foreach (var a in appointments)
+            {
+                if (a.DateTime.Kind == DateTimeKind.Unspecified)
+                {
+                    a.DateTime = DateTime.SpecifyKind(a.DateTime, DateTimeKind.Utc);
+                }
+
+                // если есть ещё поля DateTime
+                // if (a.StartTime.Kind == DateTimeKind.Unspecified)
+                //     a.StartTime = DateTime.SpecifyKind(a.StartTime, DateTimeKind.Utc);
+            }
+
+            context.Appointments.AddRange(appointments);
             await context.SaveChangesAsync();
         }
     }

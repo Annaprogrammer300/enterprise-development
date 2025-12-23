@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "Polyclinic.Application.Contracts.Grpc";
+
+import "google/protobuf/timestamp.proto";
+
+service PatientStreaming {
+  rpc StreamPatients (stream PatientStreamMessage) returns (stream PatientStreamResponse);
+}
+
+message PatientStreamMessage {
+  int32 id = 1;
+  string passport_number = 2;
+  string full_name = 3;
+  string gender = 4;
+  google.protobuf.Timestamp birth_date = 5;
+  string address = 6;
+  string blood_group = 7;
+  string rhesus_factor = 8;
+  string phone = 9;
+}
+
+message PatientStreamResponse {
+  bool success = 1;
+  string message = 2;
+  google.protobuf.Timestamp timestamp = 3;
+}

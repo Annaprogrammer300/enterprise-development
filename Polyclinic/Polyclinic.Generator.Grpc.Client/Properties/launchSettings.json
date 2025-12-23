@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "Polyclinic.Generator.Grpc.Host": {
+    "Polyclinic.Generator.Grpc.Client": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:51894;http://localhost:51895"
+      "applicationUrl": "https://localhost:51022;http://localhost:51023"
     }
   }
 }

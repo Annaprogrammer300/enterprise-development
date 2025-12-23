@@ -1,25 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.20" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Polyclinic.Application\Polyclinic.Application.csproj" />
-    <ProjectReference Include="..\Polyclinic.Generator.Grpc.Host\Polyclinic.Generator.Grpc.Host.csproj" />
-    <ProjectReference Include="..\Polyclinic.Generator\Polyclinic.Generator.csproj" />
-	<ProjectReference Include="..\Polyclinic.Infrastructure.EFCore\Polyclinic.Infrastructure.EFCore.csproj" />
-	<ProjectReference Include="..\Polyclinic.ServiceDefaults\Polyclinic.ServiceDefaults.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Polyclinic.Application\Polyclinic.Application.csproj" />
+		<ProjectReference Include="..\Polyclinic.Generator\Polyclinic.Generator.csproj" />
+		<ProjectReference Include="..\Polyclinic.Infrastructure.EFCore\Polyclinic.Infrastructure.EFCore.csproj" />
+		<ProjectReference Include="..\Polyclinic.ServiceDefaults\Polyclinic.ServiceDefaults.csproj" />
+	</ItemGroup>
 
 </Project>

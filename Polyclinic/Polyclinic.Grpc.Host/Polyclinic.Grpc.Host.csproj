@@ -8,23 +8,23 @@
 
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
-		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.71.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.71.0">
+
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.0" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Polyclinic.Generator\Polyclinic.Generator.csproj" />
 		<ProjectReference Include="..\Polyclinic.Application.Contracts\Polyclinic.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Polyclinic.Application\Polyclinic.Application.csproj" />
+		<ProjectReference Include="..\Polyclinic.Infrastructure.EfCore\Polyclinic.Infrastructure.EfCore.csproj" />
 		<ProjectReference Include="..\Polyclinic.ServiceDefaults\Polyclinic.ServiceDefaults.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Protobuf Include="..\Polyclinic.Application.Contracts\Protos\Patients.proto" GrpcServices="Server" />
+		<ProjectReference Include="..\Polyclinic\Polyclinic.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,22 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Sdk Name="Aspire.AppHost.Sdk" Version="9.5.0" />
+	<Sdk Name="Aspire.AppHost.Sdk" Version="9.5.0" />
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <UserSecretsId>84106108-b6e3-4bd9-9fa4-b32f1de3cd16</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>84106108-b6e3-4bd9-9fa4-b32f1de3cd16</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.0" />
-    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.0" />
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Polyclinic.Api.Host\Polyclinic.Api.Host.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Polyclinic.Api.Host\Polyclinic.Api.Host.csproj" />
+		<ProjectReference Include="..\Polyclinic.Generator.Grpc.Client\Polyclinic.Generator.Grpc.Client.csproj" />
+		<ProjectReference Include="..\Polyclinic.Grpc.Host\Polyclinic.Grpc.Host.csproj" />
+	</ItemGroup>
 
 </Project>

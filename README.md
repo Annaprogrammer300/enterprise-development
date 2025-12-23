@@ -60,10 +60,6 @@
   - `DoctorsController` - CRUD для врачей  
   - `AppointmentsController` - CRUD для записей
   - `AnalyticsController` - аналитические endpoints
-  - `GeneratorController` - управление генерацией 
-### HostedServices/
-- `PatientGeneratorHostedService` - фоновая генерация 
-- `PatientConsumerHostedService` - обработка сообщений 
 
 **Конфигурация**: `Program.cs`, `appsettings.json`
 
@@ -103,15 +99,23 @@
 **Назначение**: Самостоятельное приложение для генерации и отправки пациентов
 ### Generator/
 - `PatientGenerator.cs` - Генератор случайных пациентов
-### Services/
-- `IProducerService.cs` - Интерфейс сервиса отправки (провайдер контрактов)
-- `ProducerService.cs` - Реализация отправки данных в БД
 
-## Polyclinic.Generator.Grpc.Host (gRPC хост для потоковой передачи)
-**Назначение**: Сервис с gRPC API для потоковой передачи пациентов
-- `Program.cs` - Конфигурация приложения генератора
+## Polyclinic.Generator.Grpc.Client 
+**Назначение**: gRPC‑клиент‑генератор, отправляющий поток пациентов на хост
+- `Program.cs` - регистрация gRPC‑клиента и фонового сервиса
+### Configurations/
+- `GeneratorOptions` — настройки генерации 
 ### Services/
-- `PatientGrpcGeneratorService.cs` -  реализация gRPC
+- `PatientGenerationService.cs` -  генерирует PatientCreateUpdateDto через PatientGenerator, маппит DTO в gRPC‑сообщения
+
+## Polyclinic.Grpc.Host
+ **Назначение**: gRPC‑хост, принимающий поток пациентов
+- `Program.cs` - конфигурация gRPC‑сервера
+### Configurations/
+- `GeneratorOptions` — настройки генерации 
+### Services/
+- `PatientStreamingService.cs` -  реализация gRPC‑сервиса
+
 
 ### CRUD операции
 
@@ -135,14 +139,6 @@
 - `POST /api/appointments` - создать новую запись
 - `PUT /api/appointments/{id}` - обновить запись
 - `DELETE /api/appointments/{id}` - удалить запись
-
-### Генератор пациентов (`/api/generator/generate`)
-- **GET /api/generator/generate** - запуск генерации пациентов
-  - Параметры:
-    - `batchSize` (int, default=10) - размер батча
-    - `payloadLimit` (int, default=5) - количество батчей
-    - `waitTime` (int, default=2) - пауза между батчами в сек
-  - Возвращает: список сгенерированных пациентов (PatientDto)
 
 ### Аналитические endpoints (`/api/analytics`)
 
