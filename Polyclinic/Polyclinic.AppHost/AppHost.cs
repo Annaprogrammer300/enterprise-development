@@ -11,8 +11,8 @@ var api = builder
     .WaitFor(postgresDb);
 
 var grpcServer = builder.AddProject<Projects.Polyclinic_Grpc_Host>("polyclinic-grpc-host")
-    .WithHttpsEndpoint(port: 7002, name: "grpc-https")
-    .WithHttpEndpoint(port: 5002, name: "grpc-http")
+    .WithHttpsEndpoint(port: 7102, name: "grpc-https")
+    .WithHttpEndpoint(port: 5102, name: "grpc-http")
     .WithReference(postgresDb)
     .WaitFor(postgresDb)
     .WaitFor(api);
